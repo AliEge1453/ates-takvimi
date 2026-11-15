@@ -1357,8 +1357,12 @@ const W_LEVEL_ZOOM = { ulke: 3, il: 5, ilce: 8, sehir: 10 };
 let W_NOM_LAST = 0;
 function tileUrl() { return WEB ? "https://tile.openstreetmap.org/{z}/{x}/{y}.png" : "/karo/{z}/{x}/{y}.png"; }
 async function webProbe() {
-  try { const r = await fetch("veri1/meta.json", { cache: "no-cache" }); if (!r.ok) return null; const m = await r.json(); return m && m.tiles ? m : null; }
-  catch (e) { return null; }
+  /* veri klasorlu (veri1/meta.json) ya da duz (meta.json, karolar ana dizinde) yuklenmis olabilir */
+  for (const [path, flat] of [["veri1/meta.json", false], ["meta.json", true]]) {
+    try { const r = await fetch(path, { cache: "no-cache" }); if (!r.ok) continue; const m = await r.json(); if (m && m.tiles) { m.flat = flat; return m; } }
+    catch (e) {}
+  }
+  return null;
 }
 async function webApi(path, opt) {
   const u = new URL(path, location.href), q = u.searchParams, p = u.pathname;
@@ -1448,7 +1452,7 @@ async function wTile(ti, tj) {
   if (WTILES.has(key)) return WTILES.get(key);
   if (!WEB.tileDir) { WEB.tileDir = new Map(); WEB.tiles.forEach((t, i) => WEB.tileDir.set(t, (WEB.dirs || [])[i] || 1)); }
   if (!WEB.tileDir.has(key)) { WTILES.set(key, null); return null; }
-  const r = await fetch(`veri${WEB.tileDir.get(key)}/T${key}.dat`);
+  const r = await fetch(WEB.flat ? `T${key}.dat` : `veri${WEB.tileDir.get(key)}/T${key}.dat`);
   if (!r.ok) throw new Error(`Veri parçası indirilemedi (T${key}, ${r.status}).`);
   const buf = await new Response(r.body.pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
   const dv = new DataView(buf);
