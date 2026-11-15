@@ -13,12 +13,14 @@
 <link rel="stylesheet" href="/yerel/fonts.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
-/* Renk: termal kamera skalasi (acik temada sicak = koyu, koyu temada sicak = parlak), sensor basina tek renk.
+/* Renk: arayuz notr grafit + tek vurgu (elektrik mavisi, --acc); veri renkleri ayri (uyumlu seri --harm, sensorler);
+   isi haritasi termal kamera skalasi (--t0..--t4) degismedi.
    Yazi: Big Shoulders Display yalnizca buyuk basliklar; geri kalan her sey (metin, etiket, sayi) Public Sans. */
 :root{
-  --ground:#eceee8; --ground2:#e3e6df; --ground3:#d9ddd4; --ink:#181c21; --ink2:#575e66; --line:#c4c8c0; --cell0:#dcdfd7;
-  --viirs:#2d5f8b; --modis:#9a5b16; --harm:#c0392b; --peak:rgba(192,57,43,.13);
-  --terra:#9a5b16; --aqua:#1f7a6d; --snpp:#2d5f8b;
+  --ground:#f5f6f8; --ground2:#eaedf1; --ground3:#dde2e8; --ink:#0d1117; --ink2:#525b66; --line:#cbd2da; --cell0:#e2e6eb;
+  --acc:#0b5fd6; --err:#c8102e;
+  --viirs:#5a43d4; --modis:#b0620a; --harm:#d4163c; --peak:rgba(212,22,60,.11);
+  --terra:#b0620a; --aqua:#0b8571; --snpp:#5a43d4;
   --t0:#f3e6b4; --t1:#efa752; --t2:#d95a2b; --t3:#a3223f; --t4:#4c1456;
   --f-disp:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;
   --f-body:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
@@ -26,14 +28,16 @@
   --f-mono:var(--f-ui);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --ground:#0e1320; --ground2:#141a2a; --ground3:#1b2336; --ink:#e3e6ea; --ink2:#9aa1ad; --line:#2a3245; --cell0:#192032;
-  --viirs:#62acd9; --modis:#dc9d42; --harm:#ff6a4b; --peak:rgba(255,106,75,.15);
-  --terra:#dc9d42; --aqua:#5fc2b5; --snpp:#62acd9;
+  --ground:#0b0d10; --ground2:#12161b; --ground3:#1a1f26; --ink:#f2f4f6; --ink2:#99a2ad; --line:#272e37; --cell0:#161a20;
+  --acc:#3b9bff; --err:#ff4d5e;
+  --viirs:#9b87ff; --modis:#f2a93b; --harm:#ff3d68; --peak:rgba(255,61,104,.14);
+  --terra:#f2a93b; --aqua:#2fd0b5; --snpp:#9b87ff;
   --t0:#2a1a44; --t1:#6d1c62; --t2:#bb3443; --t3:#ef7c25; --t4:#fbe08a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --ground:#0e1320; --ground2:#141a2a; --ground3:#1b2336; --ink:#e3e6ea; --ink2:#9aa1ad; --line:#2a3245; --cell0:#192032;
-  --viirs:#62acd9; --modis:#dc9d42; --harm:#ff6a4b; --peak:rgba(255,106,75,.15);
-  --terra:#dc9d42; --aqua:#5fc2b5; --snpp:#62acd9;
+  --ground:#0b0d10; --ground2:#12161b; --ground3:#1a1f26; --ink:#f2f4f6; --ink2:#99a2ad; --line:#272e37; --cell0:#161a20;
+  --acc:#3b9bff; --err:#ff4d5e;
+  --viirs:#9b87ff; --modis:#f2a93b; --harm:#ff3d68; --peak:rgba(255,61,104,.14);
+  --terra:#f2a93b; --aqua:#2fd0b5; --snpp:#9b87ff;
   --t0:#2a1a44; --t1:#6d1c62; --t2:#bb3443; --t3:#ef7c25; --t4:#fbe08a; color-scheme:dark}
 
 *{box-sizing:border-box}
@@ -42,9 +46,9 @@ body{margin:0; background:var(--ground); color:var(--ink); font:17px/1.55 var(--
 [hidden]{display:none!important}
 #exmap{-webkit-user-select:none;user-select:none}
 a{color:var(--ink); text-underline-offset:3px}
-a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
 .wrap{width:100%; max-width:1180px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
-.n{font:600 .95em var(--f-ui); color:var(--harm); white-space:nowrap}
+.n{font:600 .95em var(--f-ui); color:var(--acc); white-space:nowrap}
 
 /* --- ust cubuk --- */
 .bar{position:sticky; top:0; z-index:30; background:var(--ground); border-bottom:1.5px solid var(--ink)}
@@ -55,7 +59,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .nav::-webkit-scrollbar{display:none}
 .nav a{color:var(--ink2); text-decoration:none; padding:6px 0 4px; border-bottom:2px solid transparent; white-space:nowrap}
 .nav a:hover{color:var(--ink)}
-.nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--harm)}
+.nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--acc)}
 .status{margin:0; font:400 13px var(--f-ui); color:var(--ink2); white-space:nowrap}
 .langbtn{flex:none; font:600 13.5px var(--f-ui); background:none; color:var(--ink); border:1.5px solid var(--ink); padding:5px 9px; cursor:pointer}
 .langbtn:hover{background:var(--ink); color:var(--ground)}
@@ -81,17 +85,17 @@ p{max-width:68ch}
 .hero-key i{display:inline-block; width:96px; height:8px; flex:none}
 #globe{display:block; width:100%; height:480px; cursor:grab; touch-action:pan-y; outline-offset:-3px}
 #globe:active{cursor:grabbing}
-#globe:focus-visible{outline:2px solid var(--harm)}
-.hero.space{--ground:#0e1320; --ground2:#141a2a; --ground3:#1b2336; --ink:#e3e6ea; --ink2:#9aa1ad; --line:#2a3245; --harm:#ff6a4b; --viirs:#62acd9;
-  --terra:#dc9d42; --aqua:#5fc2b5; --snpp:#62acd9; --t0:#2a1a44; --t1:#6d1c62; --t2:#bb3443; --t3:#ef7c25; --t4:#fbe08a; background:#080b14; color:var(--ink); color-scheme:dark}
+#globe:focus-visible{outline:2px solid var(--acc)}
+.hero.space{--ground:#0b0d10; --ground2:#12161b; --ground3:#1a1f26; --ink:#f2f4f6; --ink2:#99a2ad; --line:#272e37; --harm:#ff3d68; --acc:#3b9bff; --viirs:#9b87ff;
+  --terra:#f2a93b; --aqua:#2fd0b5; --snpp:#9b87ff; --t0:#2a1a44; --t1:#6d1c62; --t2:#bb3443; --t3:#ef7c25; --t4:#fbe08a; background:#06080a; color:var(--ink); color-scheme:dark}
 .hero.space .hero-key{position:static; margin:0 16px; padding:8px 0 12px; background:none; max-width:none}
 .hero-tools{position:absolute; top:12px; right:16px; display:flex; flex-direction:column; align-items:flex-end; gap:8px}
 .hrow{display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:8px}
 .gclock{font:600 13.5px var(--f-ui); color:var(--ink2); font-variant-numeric:tabular-nums}
 .hero-tools .seg{background:var(--ground2)}
-.gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1.5px solid var(--ink); padding:6px 10px; font:600 13.5px var(--f-ui)}
+.gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1px solid var(--line); padding:6px 10px; font:600 13.5px var(--f-ui)}
 .gbar .btn{padding:4px 10px; font-size:12px}
-.gbar input{width:150px; accent-color:var(--harm)}
+.gbar input{width:150px; accent-color:var(--acc)}
 .gbar b{display:inline-block; min-width:9ch; font:800 20px/1 var(--f-disp)}
 #gyear b{min-width:4ch} #gyear span{color:var(--ink2)}
 .tourgo{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); padding:7px 12px; font-size:12px}
@@ -103,10 +107,10 @@ p{max-width:68ch}
 .tour-b .btn{padding:6px 12px; font-size:12px}
 .tour-b .btn:disabled{opacity:.4; cursor:default}
 .tour-b .mini{all:unset; cursor:pointer; margin-left:auto; font:400 13px var(--f-ui); color:var(--ink2); text-decoration:underline; text-underline-offset:3px}
-.tour i{position:absolute; left:0; bottom:0; height:3px; width:0; background:var(--harm)}
+.tour i{position:absolute; left:0; bottom:0; height:3px; width:0; background:var(--acc)}
 .gpick{position:absolute; top:56px; left:max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; font:600 13.5px var(--f-ui); max-width:260px}
 .gpick span:first-child{background:var(--ground2); padding:3px 6px}
-#gpickmsg{color:var(--harm); background:var(--ground2)}
+#gpickmsg{color:var(--acc); background:var(--ground2)}
 @media (max-width:640px){ .hero-tools, .gpick, .tour, .tourgo{position:static; margin:8px 16px 0; align-items:flex-start} .hrow{justify-content:flex-start} }
 .intro{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:36px 56px; align-items:start}
 .intro h1{font:800 clamp(64px,11vw,140px)/.84 var(--f-disp); text-transform:uppercase; letter-spacing:.005em; margin:0 0 22px}
@@ -115,13 +119,13 @@ p{max-width:68ch}
 .btn{display:inline-flex; align-items:center; font:600 14.5px var(--f-ui); text-decoration:none; padding:10px 16px; cursor:pointer; border:1.5px solid var(--ink); color:var(--ink); background:var(--ground)}
 .btn.primary{background:var(--ink); color:var(--ground)}
 .btn:hover{background:var(--ink); color:var(--ground)}
-.btn.primary:hover{background:var(--harm); border-color:var(--harm); color:var(--ground)}
-.passlog{border:1.5px solid var(--ink)}
-.passlog h2{font:600 26px/1 var(--f-disp); padding:14px 14px 8px; margin:0}
-.passlog p{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:0; padding:0 14px 12px}
+.btn.primary:hover{background:var(--acc); border-color:var(--acc); color:var(--ground)}
+.passlog{border-top:3px solid var(--ink)}
+.passlog h2{font:600 26px/1 var(--f-disp); padding:14px 0 10px; margin:0}
+.passlog p{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:0; padding:0 0 10px}
 table.pass{width:100%; border-collapse:collapse; font:400 13.5px var(--f-ui); font-variant-numeric:tabular-nums}
-table.pass th{white-space:nowrap; font-weight:600; color:var(--ink2); text-align:left; padding:7px 14px; border-top:1.5px solid var(--ink)}
-table.pass td{padding:9px 14px; border-top:1px solid var(--line); vertical-align:top}
+table.pass th{white-space:nowrap; font-weight:600; color:var(--ink2); text-align:left; padding:8px 14px 8px 0; background:none; border-bottom:1px solid var(--ink)}
+table.pass td{padding:10px 14px 10px 0; border-bottom:1px solid var(--line); vertical-align:top}
 table.pass td.sat{font:600 20px/1.1 var(--f-disp)}
 table.pass td:not(.sat){white-space:nowrap}
 table.pass td.sat i{display:inline-block; width:10px; height:10px; margin-right:8px}
@@ -132,7 +136,7 @@ table.pass small{display:block; color:var(--ink2); font:400 12.5px/1.6 var(--f-u
   text-decoration:none; color:var(--ink); align-items:baseline}
 .routes a b{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp)}
 .routes a span{color:var(--ink2); font-size:16px; max-width:56ch}
-.routes a:hover b{color:var(--harm)}
+.routes a:hover b{color:var(--acc)}
 .proof{font-size:clamp(19px,2.1vw,22px); line-height:1.5; max-width:60ch; margin:0}
 /* --- yorunge kaymasi karti (ana sayfa) --- */
 .shift{padding-bottom:22px; border-bottom:1px solid var(--line)}
@@ -176,17 +180,17 @@ table.ev td:first-child{white-space:normal; min-width:150px; font:400 15px var(-
 table.ev td small{display:block; color:var(--ink2); font-size:10.5px}
 table.ev .r{text-align:right}
 .g{display:inline-block; padding:1px 7px; font:600 13px var(--f-ui); border:1px solid currentColor}
-.g-yüksek{color:var(--harm)}
+.g-yüksek{color:var(--acc)}
 .g-orta{color:var(--modis)}
 .g-düşük{color:var(--ink2)}
 .now{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:20px 56px; align-items:start; border-top:1.5px solid var(--ink); padding-top:18px}
 .now h2{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); margin:0 0 12px}
 .now p{margin:0; color:var(--ink2); font-size:15px; max-width:44ch}
 .nowtab td.sat button.nowgo{all:unset; cursor:pointer; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px}
-.nowtab td.sat button.nowgo:hover{color:var(--harm)}
+.nowtab td.sat button.nowgo:hover{color:var(--acc)}
 .nowtab .mini{all:unset; cursor:pointer; font:400 13px var(--f-ui); text-decoration:underline; text-underline-offset:3px; color:var(--ink2); white-space:nowrap}
-.nowtab .mini:hover{color:var(--harm)}
-.nowtab td.sat button.nowgo:focus-visible, .nowtab .mini:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
+.nowtab .mini:hover{color:var(--acc)}
+.nowtab td.sat button.nowgo:focus-visible, .nowtab .mini:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
 @media (max-width:860px){ .now{grid-template-columns:1fr} }
 .exports{display:flex; flex-wrap:wrap; gap:8px; margin-left:auto}
 details.wsets > summary, details.adv > summary{cursor:pointer; font:400 13px var(--f-ui); color:var(--ink2); width:fit-content}
@@ -196,7 +200,7 @@ details.adv{align-self:center}
 details.adv[open]{flex-basis:100%; order:9}
 .advbox{display:flex; flex-wrap:wrap; gap:14px 22px; align-items:end; margin-top:10px}
 .controls button.act.repbtn{display:inline-flex; align-items:center; gap:8px; background:var(--ink); color:var(--ground)}
-.controls button.act.repbtn:hover{background:var(--harm); border-color:var(--harm); color:var(--ground)}
+.controls button.act.repbtn:hover{background:var(--acc); border-color:var(--acc); color:var(--ground)}
 .controls button.repbtn svg{width:15px; height:15px; flex:none}
 .filebtn{cursor:pointer}
 .filebtn input{display:block; margin-top:4px; font:400 13px var(--f-ui); max-width:230px}
@@ -229,8 +233,8 @@ body.printing .tool{max-width:780px}
 .tool-head{display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px 32px}
 .modes{display:flex; gap:22px; font:600 14.5px var(--f-ui)}
 .modes button{all:unset; cursor:pointer; color:var(--ink2); padding-bottom:5px; border-bottom:2px solid transparent}
-.modes button[aria-pressed="true"]{color:var(--ink); border-bottom-color:var(--harm)}
-.modes button:focus-visible{outline:2px solid var(--harm); outline-offset:3px}
+.modes button[aria-pressed="true"]{color:var(--ink); border-bottom-color:var(--acc)}
+.modes button:focus-visible{outline:2px solid var(--acc); outline-offset:3px}
 .controls{display:flex; flex-wrap:wrap; gap:14px 22px; align-items:end; font:400 13px var(--f-ui); color:var(--ink2)}
 .controls label{display:flex; flex-direction:column; gap:6px}
 .controls select, .controls button.act, .wsearch button{font:600 14.5px var(--f-ui); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:7px 10px; border-radius:0}
@@ -240,11 +244,11 @@ body.printing .tool{max-width:780px}
 .selinfo{display:flex; flex-direction:column; gap:14px; min-width:0}
 .selinfo .summary{font-size:18px; line-height:1.5; margin:0}
 .drop{border:1.5px dashed var(--ink2); padding:22px; display:flex; flex-direction:column; gap:10px; font-size:15px; background:var(--ground2)}
-.drop.over{border-color:var(--harm); background:var(--ground)}
+.drop.over{border-color:var(--acc); background:var(--ground)}
 .drop strong{font:800 24px/1 var(--f-disp)}
 .drop input{font:400 13.5px var(--f-ui); color:var(--ink2); max-width:100%}
 .msg{font:400 13.5px/1.6 var(--f-ui); color:var(--ink2); margin:0}
-.msg.err{color:var(--harm)}
+.msg.err{color:var(--err)}
 table.seasons{border-collapse:collapse; font:400 13.5px var(--f-ui); width:100%; font-variant-numeric:tabular-nums}
 table.seasons th{font-weight:600; text-align:left; color:var(--ink2); padding:6px 10px 6px 0; border-bottom:1.5px solid var(--ink)}
 table.seasons td{padding:5px 10px 5px 0; border-bottom:1px solid var(--line); white-space:nowrap}
@@ -262,7 +266,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wres li{border-bottom:1px solid var(--line)}
 .wres button{all:unset; box-sizing:border-box; width:100%; cursor:pointer; padding:7px 6px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:1px 16px}
 .wres button:hover, .wres button[aria-current="true"]{background:var(--ground2)}
-.wres button:focus-visible{outline:2px solid var(--harm); outline-offset:-2px}
+.wres button:focus-visible{outline:2px solid var(--acc); outline-offset:-2px}
 .wres b{font-weight:700; font-size:15px}
 .wres small{grid-column:1; font:400 13px/1.5 var(--f-ui); color:var(--ink2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .wres em{font:400 13px var(--f-ui); color:var(--ink2); font-style:normal; grid-row:1/3; grid-column:2; align-self:center}
@@ -270,20 +274,20 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wsets > .lab{font:400 13px var(--f-ui); color:var(--ink2)}
 .chipbox{display:flex; flex-wrap:wrap; gap:6px}
 .lab .mini{all:unset; cursor:pointer; margin-left:10px; text-decoration:underline; text-underline-offset:3px; color:var(--ink2)}
-.lab .mini:hover{color:var(--harm)}
-.lab .mini:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
+.lab .mini:hover{color:var(--acc)}
+.lab .mini:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
 .chipbox button{all:unset; cursor:pointer; font:600 13.5px var(--f-ui); padding:5px 9px; border:1px solid var(--line); color:var(--ink)}
 #whchips button{border-style:dashed; color:var(--ink2)}
-.chipbox button:hover, .chipbox button[aria-current="true"]{border-color:var(--harm); color:var(--harm)}
-.chipbox button:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
-.seg{display:inline-flex; border:1.5px solid var(--ink)}
+.chipbox button:hover, .chipbox button[aria-current="true"]{border-color:var(--acc); color:var(--acc)}
+.chipbox button:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.seg{display:inline-flex; background:var(--ground2); padding:3px; gap:2px}
 .seg button{all:unset; cursor:pointer; font:600 13.5px var(--f-ui); padding:7px 10px; color:var(--ink2)}
 .seg button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
-.seg button:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
+.seg button:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
 .controls .chk{flex-direction:row; align-items:center; gap:8px}
-.controls button.go{border-color:var(--harm); color:var(--harm)}
-.controls button.go:hover{background:var(--harm); color:var(--ground)}
-.controls button.go:disabled{opacity:.4; cursor:not-allowed; background:var(--ground); color:var(--harm)}
+.controls button.go{border-color:var(--acc); color:var(--acc)}
+.controls button.go:hover{background:var(--acc); color:var(--ground)}
+.controls button.go:disabled{opacity:.4; cursor:not-allowed; background:var(--ground); color:var(--acc)}
 .wmap{height:min(460px,62vh); background:var(--ground2); border:1.5px solid var(--ink); position:relative}
 .wmap.boxing{cursor:crosshair}
 .wmap .leaflet-tile-pane{filter:saturate(.35) contrast(.95)}
@@ -291,17 +295,17 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wsel{font-size:17px; margin:0}
 .wsel b{font:800 26px/1 var(--f-disp); display:block; margin-bottom:2px}
 .wprog{height:6px; background:var(--ground2); border:1px solid var(--line)}
-.wprog i{display:block; height:100%; width:0; background:var(--harm)}
+.wprog i{display:block; height:100%; width:0; background:var(--acc)}
 @media (prefers-reduced-motion:no-preference){ .wprog i{transition:width .4s} }
 .leaflet-container{font:400 13px var(--f-ui)!important; background:var(--ground2)!important}
 .leaflet-control-attribution{font:400 12px var(--f-ui)!important}
 
 /* --- karsilastir --- */
 .cmp-pick{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px}
-.slot{border:1.5px solid var(--ink); border-top:7px solid var(--c); padding:14px; display:flex; flex-direction:column; gap:12px}
+.slot{background:var(--ground2); border-top:4px solid var(--c); padding:14px; display:flex; flex-direction:column; gap:12px}
 .slot h3{font:800 34px/1 var(--f-disp); color:var(--c)}
 .slot .controls select{max-width:100%}
-.picker{border:1.5px solid var(--ink); padding:16px; display:flex; flex-direction:column; gap:14px; background:var(--ground)}
+.picker{background:var(--ground2); padding:16px; display:flex; flex-direction:column; gap:14px; background:var(--ground)}
 .cmp-sum{font-size:19px; line-height:1.5; margin:0; max-width:66ch}
 table.cmp{border-collapse:collapse; font:400 13.5px var(--f-ui); width:100%; max-width:860px; font-variant-numeric:tabular-nums}
 table.cmp th{font-weight:600; color:var(--ink2); text-align:left; padding:7px 12px 7px 0; border-bottom:1.5px solid var(--ink)}
@@ -374,7 +378,7 @@ table.cmp .r{text-align:right}
       </div>
       <div class="passlog">
         <h2>Uyduların geçiş saati</h2>
-        <p>Türkiye üzerinden gündüz geçişinin yerel güneş saati, yıllık medyan.</p>
+        <p>Türkiye üzerinde, yerel saat.</p>
         <table class="pass" id="passtab"></table>
       </div>
     </div>
@@ -386,9 +390,9 @@ table.cmp .r{text-align:right}
     </div>
     <div class="wrap">
       <nav class="routes" aria-label="Ne yapabilirsin">
-        <a href="#/hesapla"><b>Hesapla</b><span>Bir ülke, il, ilçe ya da haritada çizdiğin bir alan için uyumlu yangın takvimi, yıllık seyir, kritik aylar ve sezon tablosu.</span></a>
-        <a href="#/karsilastir"><b>Karşılaştır</b><span>İki yeri ya da aynı yerin iki dönemini yan yana koy: hangisinde sezon daha erken başlıyor, hangi aylar ağırlıkta.</span></a>
-        <a href="#/yontem"><b>Yöntem ve kanıt</b><span>Uyumun hangi ölçekte tuttuğu, 18 bölgedeki test sonuçları ve MODIS'in kayan saatinin kayda etkisi.</span></a>
+        <a href="#/hesapla"><b>Hesapla</b><span>Bir yer seç, yangın takvimini gör.</span></a>
+        <a href="#/karsilastir"><b>Karşılaştır</b><span>İki yeri ya da iki dönemi yan yana koy.</span></a>
+        <a href="#/yontem"><b>Yöntem ve kanıt</b><span>Test sonuçları ve MODIS'in kayan saati.</span></a>
       </nav>
     </div>
     <div class="wrap"><p class="proof" id="proof"></p></div>
@@ -723,14 +727,14 @@ function passTable() {
   if (!R) { t.innerHTML = ""; return; }
   const yrs = R.years, pick = arr => { if (!arr) return [null, null, null, null]; let i0 = arr.findIndex(v => v != null), i1 = arr.length - 1 - [...arr].reverse().findIndex(v => v != null);
     return i0 < 0 ? [null, null, null, null] : [yrs[i0], arr[i0], yrs[i1], arr[i1]]; };
-  const rows = [["Terra", css("--terra"), R.terra, "1999", "Yakıtı bitti, veri toplama Ocak 2027'de sona eriyor."],
-                ["Aqua", css("--aqua"), R.aqua, "2002", "Yörüngesi kayıyor, 2027 sonbaharına kadar çalışacak."],
-                ["S-NPP", css("--snpp"), R.snpp, "2011", "VIIRS taşıyor. FIRMS arşivinde verisi 2 Kasım 2026'ya kadar."],
-                ["NOAA-20", css("--snpp"), R.noaa20, "2017", "VIIRS taşıyor, geçiş saati sabit."]];
+  const rows = [["Terra", css("--terra"), R.terra, "1999", "Ocak 2027'de kapanıyor"],
+                ["Aqua", css("--aqua"), R.aqua, "2002", "2027 sonbaharında kapanıyor"],
+                ["S-NPP", css("--snpp"), R.snpp, "2011", "VIIRS · 2 Kasım 2026'da durdu"],
+                ["NOAA-20", css("--snpp"), R.noaa20, "2017", "VIIRS · saati sabit"]];
   t.innerHTML = "<tr><th>Uydu</th><th>İlk yıl</th><th>Son yıl</th></tr>" + rows.map(([nm, col, arr, ly, note]) => {
     const [y0, v0, y1, v1] = pick(arr); if (v0 == null) return "";
     const moved = Math.abs(v1 - v0) >= .4;
-    return `<tr><td class="sat"><i style="background:${col}"></i>${nm}<small>${ly}'de fırlatıldı. ${note}</small></td><td>${ft(v0)}<small>${y0}</small></td><td class="${moved ? "moved" : ""}">${ft(v1)}<small>${y1}</small></td></tr>`;
+    return `<tr><td class="sat"><i style="background:${col}"></i>${nm}<small>${note}</small></td><td>${ft(v0)}<small>${y0}</small></td><td class="${moved ? "moved" : ""}">${ft(v1)}<small>${y1}</small></td></tr>`;
   }).join("");
 }
 function shiftCard() {
@@ -2531,6 +2535,9 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
 /* Sayfa Turkce uretilir; EN secilince gorunen metinler bu tablolarla cevrilir (sozluk + kaliplar + ifadeler).
    Yeni eklenen dugumler MutationObserver ile cevrilir. TR'ye donus sayfayi yeniden yukler. */
 const I18N = {
+"Türkiye üzerinde, yerel saat.":"Over Türkiye, local time.","Ocak 2027'de kapanıyor":"Ends January 2027","2027 sonbaharında kapanıyor":"Ends autumn 2027",
+"VIIRS · 2 Kasım 2026'da durdu":"VIIRS · stopped 2 Nov 2026","VIIRS · saati sabit":"VIIRS · stable time","Bir yer seç, yangın takvimini gör.":"Pick a place, see its fire calendar.",
+"İki yeri ya da iki dönemi yan yana koy.":"Put two places or two periods side by side.","Test sonuçları ve MODIS'in kayan saati.":"Test results and MODIS's drifting clock.",
 "Ana sayfa":"Home","Hesapla":"Explore","Karşılaştır":"Compare","Yöntem ve kanıt":"Method & evidence","Hakkında":"About",
 "Bir yer seç":"Pick a place","Yöntemi incele":"See the method","Uyduların geçiş saati":"Satellite overpass time",
 "Türkiye üzerinden gündüz geçişinin yerel güneş saati, yıllık medyan.":"Local solar time of the daytime overpass over Türkiye, yearly median.",
