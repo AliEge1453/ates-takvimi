@@ -632,18 +632,19 @@ TEMPLATE = r"""<title>Ateş Takvimi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/yerel/fonts.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Martian+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
 /* Renk: termal kamera skalasi (acik temada sicak = koyu, koyu temada sicak = parlak), sensor basina tek renk.
-   Yazi: Big Shoulders Display basliklar, Atkinson Hyperlegible metin, Martian Mono etiket ve sayilar. */
+   Yazi: Big Shoulders Display yalnizca buyuk basliklar; geri kalan her sey (metin, etiket, sayi) Public Sans. */
 :root{
   --ground:#eceee8; --ground2:#e3e6df; --ground3:#d9ddd4; --ink:#181c21; --ink2:#575e66; --line:#c4c8c0; --cell0:#dcdfd7;
   --viirs:#2d5f8b; --modis:#9a5b16; --harm:#c0392b; --peak:rgba(192,57,43,.13);
   --terra:#9a5b16; --aqua:#1f7a6d; --snpp:#2d5f8b;
   --t0:#f3e6b4; --t1:#efa752; --t2:#d95a2b; --t3:#a3223f; --t4:#4c1456;
   --f-disp:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;
-  --f-body:"Atkinson Hyperlegible",system-ui,"Segoe UI",sans-serif;
-  --f-mono:"Martian Mono",ui-monospace,Consolas,"Courier New",monospace;
+  --f-body:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
+  --f-ui:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
+  --f-mono:var(--f-ui);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --ground:#0e1320; --ground2:#141a2a; --ground3:#1b2336; --ink:#e3e6ea; --ink2:#9aa1ad; --line:#2a3245; --cell0:#192032;
@@ -657,26 +658,27 @@ TEMPLATE = r"""<title>Ateş Takvimi</title>
   --t0:#2a1a44; --t1:#6d1c62; --t2:#bb3443; --t3:#ef7c25; --t4:#fbe08a; color-scheme:dark}
 
 *{box-sizing:border-box}
+:root *{font-variant-numeric:tabular-nums!important}   /* sayilar alt alta hizali (tek aralikli yazi yerine) */
 body{margin:0; background:var(--ground); color:var(--ink); font:17px/1.55 var(--f-body)}
 [hidden]{display:none!important}
 #exmap{-webkit-user-select:none;user-select:none}
 a{color:var(--ink); text-underline-offset:3px}
 a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 .wrap{width:100%; max-width:1180px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
-.n{font:600 .85em var(--f-mono); color:var(--harm); white-space:nowrap}
+.n{font:600 .95em var(--f-ui); color:var(--harm); white-space:nowrap}
 
 /* --- ust cubuk --- */
 .bar{position:sticky; top:0; z-index:30; background:var(--ground); border-bottom:1.5px solid var(--ink)}
 .bar .wrap{display:flex; align-items:center; gap:28px; min-height:56px}
 .brand{display:flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none; font:800 24px/1 var(--f-disp); text-transform:uppercase; letter-spacing:.01em; white-space:nowrap}
 .brand svg{width:26px; height:26px; flex:none}
-.nav{display:flex; gap:22px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; font:600 12px var(--f-mono)}
+.nav{display:flex; gap:22px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; font:600 13.5px var(--f-ui)}
 .nav::-webkit-scrollbar{display:none}
 .nav a{color:var(--ink2); text-decoration:none; padding:6px 0 4px; border-bottom:2px solid transparent; white-space:nowrap}
 .nav a:hover{color:var(--ink)}
 .nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--harm)}
-.status{margin:0; font:400 11px var(--f-mono); color:var(--ink2); white-space:nowrap}
-.langbtn{flex:none; font:600 12px var(--f-mono); background:none; color:var(--ink); border:1.5px solid var(--ink); padding:5px 9px; cursor:pointer}
+.status{margin:0; font:400 13px var(--f-ui); color:var(--ink2); white-space:nowrap}
+.langbtn{flex:none; font:600 13.5px var(--f-ui); background:none; color:var(--ink); border:1.5px solid var(--ink); padding:5px 9px; cursor:pointer}
 .langbtn:hover{background:var(--ink); color:var(--ground)}
 @media (max-width:860px){ .status{display:none} .bar .wrap{gap:14px} .brand span{display:none} .nav{gap:16px} }
 
@@ -684,7 +686,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 main{display:block}
 .pg{padding-block:36px 72px; display:flex; flex-direction:column; gap:48px}
 .pg[data-page="ana"]{padding-top:0}
-.head h1{font:800 clamp(48px,8vw,96px)/.88 var(--f-disp); text-transform:uppercase; margin:0; letter-spacing:.005em}
+.head h1{font:800 clamp(48px,8vw,96px)/.88 var(--f-disp); margin:0; letter-spacing:.005em}
 .head p{margin:12px 0 0; font-size:18px; color:var(--ink2); max-width:60ch}
 h2{font:600 34px/1 var(--f-disp); margin:0; text-wrap:balance}
 h3{font:600 22px/1.05 var(--f-disp); margin:0}
@@ -695,7 +697,7 @@ p{max-width:68ch}
 .hero-map{max-width:1440px; margin:0 auto; position:relative}
 .hero-map svg{width:100%; height:auto; overflow:hidden}
 @media (max-width:640px){ .hero-key{position:static!important; margin:8px 16px 0} }
-.hero-key{position:absolute; left:max(16px, env(safe-area-inset-left, 0px)); bottom:12px; right:16px; font:400 11px/1.6 var(--f-mono); color:var(--ink2);
+.hero-key{position:absolute; left:max(16px, env(safe-area-inset-left, 0px)); bottom:12px; right:16px; font:400 13px/1.6 var(--f-ui); color:var(--ink2);
   display:flex; align-items:center; gap:10px; background:color-mix(in srgb, var(--ground2) 86%, transparent); padding:5px 8px; width:fit-content; max-width:calc(100% - 32px)}
 .hero-key i{display:inline-block; width:96px; height:8px; flex:none}
 #globe{display:block; width:100%; height:480px; cursor:grab; touch-action:pan-y; outline-offset:-3px}
@@ -706,24 +708,24 @@ p{max-width:68ch}
 .hero.space .hero-key{position:static; margin:0 16px; padding:8px 0 12px; background:none; max-width:none}
 .hero-tools{position:absolute; top:12px; right:16px; display:flex; flex-direction:column; align-items:flex-end; gap:8px}
 .hrow{display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:8px}
-.gclock{font:600 12px var(--f-mono); color:var(--ink2); font-variant-numeric:tabular-nums}
+.gclock{font:600 13.5px var(--f-ui); color:var(--ink2); font-variant-numeric:tabular-nums}
 .hero-tools .seg{background:var(--ground2)}
-.gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1.5px solid var(--ink); padding:6px 10px; font:600 12px var(--f-mono)}
+.gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1.5px solid var(--ink); padding:6px 10px; font:600 13.5px var(--f-ui)}
 .gbar .btn{padding:4px 10px; font-size:12px}
 .gbar input{width:150px; accent-color:var(--harm)}
-.gbar b{display:inline-block; min-width:9ch; font:800 20px/1 var(--f-disp); text-transform:uppercase}
+.gbar b{display:inline-block; min-width:9ch; font:800 20px/1 var(--f-disp)}
 #gyear b{min-width:4ch} #gyear span{color:var(--ink2)}
 .tourgo{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); padding:7px 12px; font-size:12px}
 .tour{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); width:min(340px, calc(100% - 32px)); background:var(--ground2); border:1.5px solid var(--ink); padding:14px 16px 16px; z-index:2}
-.tour-n{margin:0 0 6px; font:600 11px var(--f-mono); color:var(--ink2)}
-.tour h3{margin:0 0 8px; font:800 28px/1 var(--f-disp); text-transform:uppercase}
+.tour-n{margin:0 0 6px; font:600 13px var(--f-ui); color:var(--ink2)}
+.tour h3{margin:0 0 8px; font:800 28px/1 var(--f-disp)}
 .tour p#tourp{margin:0 0 14px; font-size:15px; line-height:1.45}
 .tour-b{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
 .tour-b .btn{padding:6px 12px; font-size:12px}
 .tour-b .btn:disabled{opacity:.4; cursor:default}
-.tour-b .mini{all:unset; cursor:pointer; margin-left:auto; font:400 11px var(--f-mono); color:var(--ink2); text-decoration:underline; text-underline-offset:3px}
+.tour-b .mini{all:unset; cursor:pointer; margin-left:auto; font:400 13px var(--f-ui); color:var(--ink2); text-decoration:underline; text-underline-offset:3px}
 .tour i{position:absolute; left:0; bottom:0; height:3px; width:0; background:var(--harm)}
-.gpick{position:absolute; top:56px; left:max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; font:600 12px var(--f-mono); max-width:260px}
+.gpick{position:absolute; top:56px; left:max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; font:600 13.5px var(--f-ui); max-width:260px}
 .gpick span:first-child{background:var(--ground2); padding:3px 6px}
 #gpickmsg{color:var(--harm); background:var(--ground2)}
 @media (max-width:640px){ .hero-tools, .gpick, .tour, .tourgo{position:static; margin:8px 16px 0; align-items:flex-start} .hrow{justify-content:flex-start} }
@@ -731,25 +733,25 @@ p{max-width:68ch}
 .intro h1{font:800 clamp(64px,11vw,140px)/.84 var(--f-disp); text-transform:uppercase; letter-spacing:.005em; margin:0 0 22px}
 .lead{font-size:clamp(19px,2.1vw,22px); line-height:1.5; margin:0; max-width:46ch}
 .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
-.btn{display:inline-flex; align-items:center; font:600 13px var(--f-mono); text-decoration:none; padding:10px 16px; cursor:pointer; border:1.5px solid var(--ink); color:var(--ink); background:var(--ground)}
+.btn{display:inline-flex; align-items:center; font:600 14.5px var(--f-ui); text-decoration:none; padding:10px 16px; cursor:pointer; border:1.5px solid var(--ink); color:var(--ink); background:var(--ground)}
 .btn.primary{background:var(--ink); color:var(--ground)}
 .btn:hover{background:var(--ink); color:var(--ground)}
 .btn.primary:hover{background:var(--harm); border-color:var(--harm); color:var(--ground)}
 .passlog{border:1.5px solid var(--ink)}
 .passlog h2{font:600 26px/1 var(--f-disp); padding:14px 14px 8px; margin:0}
-.passlog p{font:400 11px/1.6 var(--f-mono); color:var(--ink2); margin:0; padding:0 14px 12px}
-table.pass{width:100%; border-collapse:collapse; font:400 12px var(--f-mono); font-variant-numeric:tabular-nums}
+.passlog p{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:0; padding:0 14px 12px}
+table.pass{width:100%; border-collapse:collapse; font:400 13.5px var(--f-ui); font-variant-numeric:tabular-nums}
 table.pass th{white-space:nowrap; font-weight:600; color:var(--ink2); text-align:left; padding:7px 14px; border-top:1.5px solid var(--ink)}
 table.pass td{padding:9px 14px; border-top:1px solid var(--line); vertical-align:top}
 table.pass td.sat{font:600 20px/1.1 var(--f-disp)}
 table.pass td:not(.sat){white-space:nowrap}
 table.pass td.sat i{display:inline-block; width:10px; height:10px; margin-right:8px}
 table.pass .moved{color:var(--harm); font-weight:600}
-table.pass small{display:block; color:var(--ink2); font:400 10.5px/1.6 var(--f-mono); margin-top:3px}
+table.pass small{display:block; color:var(--ink2); font:400 12.5px/1.6 var(--f-ui); margin-top:3px}
 .routes{border-top:1.5px solid var(--ink)}
 .routes a{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,7fr); gap:6px 40px; padding:20px 0; border-bottom:1px solid var(--line);
   text-decoration:none; color:var(--ink); align-items:baseline}
-.routes a b{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); text-transform:uppercase}
+.routes a b{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp)}
 .routes a span{color:var(--ink2); font-size:16px; max-width:56ch}
 .routes a:hover b{color:var(--harm)}
 .proof{font-size:clamp(19px,2.1vw,22px); line-height:1.5; max-width:60ch; margin:0}
@@ -757,13 +759,13 @@ table.pass small{display:block; color:var(--ink2); font:400 10.5px/1.6 var(--f-m
 .shift{padding-bottom:22px; border-bottom:1px solid var(--line)}
 .shift-grid{display:grid; grid-template-columns:1fr; gap:22px}
 .shift-clock svg{display:block; width:100%; height:auto; overflow:visible}
-.shift-clock svg text{font:400 11px var(--f-mono); fill:var(--ink2)}
+.shift-clock svg text{font:400 13px var(--f-ui); fill:var(--ink2)}
 .shift-clock svg .sat{font:600 17px var(--f-disp); fill:var(--ink)}
-.shift-cap{font:400 11px/1.6 var(--f-mono); color:var(--ink2); margin:10px 0 0; max-width:70ch}
+.shift-cap{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:10px 0 0; max-width:70ch}
 .shift-nums{margin:0; display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) minmax(0,1fr); gap:0 32px}
 .shift-nums div{padding:12px 0 0; border-top:1px solid var(--line)}
 .shift-nums p{grid-column:1/-1}
-.shift-nums dt{font:600 12px var(--f-mono); color:var(--ink2); margin:0 0 4px}
+.shift-nums dt{font:600 13.5px var(--f-ui); color:var(--ink2); margin:0 0 4px}
 .shift-nums dd{margin:0}
 .shift-nums dd b{display:block; font:800 clamp(30px,3.2vw,42px)/.95 var(--f-disp); white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--ink)}
 .shift-nums dd b.hot{color:var(--harm)}
@@ -776,39 +778,39 @@ table.pass small{display:block; color:var(--ink2); font:400 10.5px/1.6 var(--f-m
 .sec{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,3fr); gap:20px 44px; padding-top:36px; border-top:1.5px solid var(--ink)}
 .side{display:flex; flex-direction:column; gap:12px; min-width:0}
 .side p{margin:0; font-size:15px; color:var(--ink2); max-width:40ch}
-.side .how{font:400 11px/1.7 var(--f-mono); color:var(--ink2); border-left:2px solid var(--harm); padding-left:10px}
+.side .how{font:400 13px/1.6 var(--f-ui); color:var(--ink2)}
 .plot{min-width:0; display:flex; flex-direction:column; gap:14px}
 .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
 svg{display:block; overflow:visible}
-svg text{font-family:var(--f-mono); font-size:11px; fill:var(--ink2)}
+svg text{font-family:var(--f-ui); font-size:12px; fill:var(--ink2)}
 svg .lab{fill:var(--ink)}
 svg .big{font-family:var(--f-disp); font-weight:800; fill:var(--ink)}
 svg .grid{stroke:var(--line); stroke-width:1}
 svg [data-tip]{cursor:crosshair}
 .scene{background:var(--ground2)}
-.cap{font:400 11px/1.7 var(--f-mono); color:var(--ink2); margin:0}
-code{font:400 12px var(--f-mono); background:var(--ground2); padding:1px 5px}
-table.ev{border-collapse:collapse; width:100%; font:400 12px var(--f-mono); font-variant-numeric:tabular-nums}
+.cap{font:400 13px/1.7 var(--f-ui); color:var(--ink2); margin:0}
+code{font:400 13.5px var(--f-ui); background:var(--ground2); padding:1px 5px}
+table.ev{border-collapse:collapse; width:100%; font:400 13.5px var(--f-ui); font-variant-numeric:tabular-nums}
 table.ev th{font-weight:600; color:var(--ink2); text-align:left; padding:6px 10px 6px 0; border-bottom:1.5px solid var(--ink)}
 table.ev td{padding:7px 10px 7px 0; border-bottom:1px solid var(--line); white-space:nowrap}
 table.ev td:first-child{white-space:normal; min-width:150px; font:400 15px var(--f-body)}
 table.ev td small{display:block; color:var(--ink2); font-size:10.5px}
 table.ev .r{text-align:right}
-.g{display:inline-block; padding:1px 7px; font:600 11px var(--f-mono); border:1px solid currentColor}
+.g{display:inline-block; padding:1px 7px; font:600 13px var(--f-ui); border:1px solid currentColor}
 .g-yüksek{color:var(--harm)}
 .g-orta{color:var(--modis)}
 .g-düşük{color:var(--ink2)}
 .now{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:20px 56px; align-items:start; border-top:1.5px solid var(--ink); padding-top:18px}
-.now h2{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); text-transform:uppercase; margin:0 0 12px}
+.now h2{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); margin:0 0 12px}
 .now p{margin:0; color:var(--ink2); font-size:15px; max-width:44ch}
 .nowtab td.sat button.nowgo{all:unset; cursor:pointer; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px}
 .nowtab td.sat button.nowgo:hover{color:var(--harm)}
-.nowtab .mini{all:unset; cursor:pointer; font:400 11px var(--f-mono); text-decoration:underline; text-underline-offset:3px; color:var(--ink2); white-space:nowrap}
+.nowtab .mini{all:unset; cursor:pointer; font:400 13px var(--f-ui); text-decoration:underline; text-underline-offset:3px; color:var(--ink2); white-space:nowrap}
 .nowtab .mini:hover{color:var(--harm)}
 .nowtab td.sat button.nowgo:focus-visible, .nowtab .mini:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 @media (max-width:860px){ .now{grid-template-columns:1fr} }
 .exports{display:flex; flex-wrap:wrap; gap:8px; margin-left:auto}
-details.wsets > summary, details.adv > summary{cursor:pointer; font:400 11px var(--f-mono); color:var(--ink2); width:fit-content}
+details.wsets > summary, details.adv > summary{cursor:pointer; font:400 13px var(--f-ui); color:var(--ink2); width:fit-content}
 details.wsets > summary:hover, details.adv > summary:hover{color:var(--ink)}
 details.wsets[open] > summary{margin-bottom:6px}
 details.adv{align-self:center}
@@ -818,7 +820,7 @@ details.adv[open]{flex-basis:100%; order:9}
 .controls button.act.repbtn:hover{background:var(--harm); border-color:var(--harm); color:var(--ground)}
 .controls button.repbtn svg{width:15px; height:15px; flex:none}
 .filebtn{cursor:pointer}
-.filebtn input{display:block; margin-top:4px; font:400 11px var(--f-mono); max-width:230px}
+.filebtn input{display:block; margin-top:4px; font:400 13px var(--f-ui); max-width:230px}
 .filebtn small{display:block; color:var(--ink2)}
 .rep-head, .rep-foot{display:none}
 body.printing .tool{max-width:780px}
@@ -829,16 +831,16 @@ body.printing .tool{max-width:780px}
   .bar, .foot, .tool-head, #panel-region, #panel-world, #panel-upload, #exwait, #exmapcap, #tip, .pg:not([data-page="hesapla"]){display:none!important}
   .pg{padding:0; gap:0} .wrap{max-width:none; padding:0}
   .rep-head{display:block; border-bottom:1.5px solid #000; padding-bottom:8px; margin-bottom:12px}
-  .rep-head h1{font:800 34px/1 var(--f-disp); text-transform:uppercase; margin:0 0 6px}
-  .rep-head p{margin:0; font:400 10px/1.5 var(--f-mono)}
-  .rep-foot{display:block; font:400 9px/1.55 var(--f-mono); border-top:1px solid #000; margin:14px 0 0; padding-top:6px}
+  .rep-head h1{font:800 34px/1 var(--f-disp); margin:0 0 6px}
+  .rep-head p{margin:0; font:400 12px/1.5 var(--f-ui)}
+  .rep-foot{display:block; font:400 11px/1.55 var(--f-ui); border-top:1px solid #000; margin:14px 0 0; padding-top:6px}
   .results > div, .res-row > div, .work{break-inside:avoid}
   svg{max-width:100%; height:auto}
   .scroll{overflow:visible}
 }
 .gbox{display:block; margin-bottom:8px; color:var(--ink)}
 .gbox .g{margin-right:6px}
-#tip{position:fixed; z-index:40; pointer-events:none; background:var(--ink); color:var(--ground); font:400 11px/1.5 var(--f-mono);
+#tip{position:fixed; z-index:40; pointer-events:none; background:var(--ink); color:var(--ground); font:400 13px/1.5 var(--f-ui);
   padding:7px 9px; max-width:260px; transform:translate(12px,12px)}
 #tip b{display:block; font:800 20px/1.1 var(--f-disp)}
 @media (max-width:860px){ .sec{grid-template-columns:1fr} }
@@ -846,13 +848,13 @@ body.printing .tool{max-width:780px}
 /* --- hesapla (kesif araci) --- */
 .tool{display:flex; flex-direction:column; gap:22px}
 .tool-head{display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px 32px}
-.modes{display:flex; gap:22px; font:600 13px var(--f-mono)}
+.modes{display:flex; gap:22px; font:600 14.5px var(--f-ui)}
 .modes button{all:unset; cursor:pointer; color:var(--ink2); padding-bottom:5px; border-bottom:2px solid transparent}
 .modes button[aria-pressed="true"]{color:var(--ink); border-bottom-color:var(--harm)}
 .modes button:focus-visible{outline:2px solid var(--harm); outline-offset:3px}
-.controls{display:flex; flex-wrap:wrap; gap:14px 22px; align-items:end; font:400 11px var(--f-mono); color:var(--ink2)}
+.controls{display:flex; flex-wrap:wrap; gap:14px 22px; align-items:end; font:400 13px var(--f-ui); color:var(--ink2)}
 .controls label{display:flex; flex-direction:column; gap:6px}
-.controls select, .controls button.act, .wsearch button{font:600 13px var(--f-mono); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:7px 10px; border-radius:0}
+.controls select, .controls button.act, .wsearch button{font:600 14.5px var(--f-ui); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:7px 10px; border-radius:0}
 .controls button.act, .wsearch button{cursor:pointer}
 .controls button.act:hover, .wsearch button:hover{background:var(--ink); color:var(--ground)}
 .work{display:grid; grid-template-columns:minmax(0,3fr) minmax(0,2fr); gap:24px 36px; align-items:start}
@@ -861,10 +863,10 @@ body.printing .tool{max-width:780px}
 .drop{border:1.5px dashed var(--ink2); padding:22px; display:flex; flex-direction:column; gap:10px; font-size:15px; background:var(--ground2)}
 .drop.over{border-color:var(--harm); background:var(--ground)}
 .drop strong{font:800 24px/1 var(--f-disp)}
-.drop input{font:400 12px var(--f-mono); color:var(--ink2); max-width:100%}
-.msg{font:400 12px/1.6 var(--f-mono); color:var(--ink2); margin:0}
+.drop input{font:400 13.5px var(--f-ui); color:var(--ink2); max-width:100%}
+.msg{font:400 13.5px/1.6 var(--f-ui); color:var(--ink2); margin:0}
 .msg.err{color:var(--harm)}
-table.seasons{border-collapse:collapse; font:400 12px var(--f-mono); width:100%; font-variant-numeric:tabular-nums}
+table.seasons{border-collapse:collapse; font:400 13.5px var(--f-ui); width:100%; font-variant-numeric:tabular-nums}
 table.seasons th{font-weight:600; text-align:left; color:var(--ink2); padding:6px 10px 6px 0; border-bottom:1.5px solid var(--ink)}
 table.seasons td{padding:5px 10px 5px 0; border-bottom:1px solid var(--line); white-space:nowrap}
 table.seasons td.r, table.seasons th.r{text-align:right}
@@ -873,7 +875,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .res-row > div{min-width:0; display:flex; flex-direction:column; gap:10px}
 @media (max-width:860px){ .work{grid-template-columns:1fr} }
 .world{display:flex; flex-direction:column; gap:14px}
-.woff{border-left:3px solid var(--harm); padding:4px 0 4px 14px; font-size:15px; display:flex; flex-direction:column; gap:6px; max-width:70ch}
+.woff{background:var(--ground2); padding:14px 16px; font-size:15px; display:flex; flex-direction:column; gap:6px; max-width:70ch}
 .wsearch{display:flex; gap:10px; flex-wrap:wrap}
 .wsearch input{flex:1 1 260px; min-width:0; font:400 16px var(--f-body); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:9px 12px; border-radius:0}
 .wres{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; max-height:236px; overflow:auto}
@@ -883,20 +885,20 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wres button:hover, .wres button[aria-current="true"]{background:var(--ground2)}
 .wres button:focus-visible{outline:2px solid var(--harm); outline-offset:-2px}
 .wres b{font-weight:700; font-size:15px}
-.wres small{grid-column:1; font:400 11px/1.5 var(--f-mono); color:var(--ink2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.wres em{font:400 11px var(--f-mono); color:var(--ink2); font-style:normal; grid-row:1/3; grid-column:2; align-self:center}
+.wres small{grid-column:1; font:400 13px/1.5 var(--f-ui); color:var(--ink2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.wres em{font:400 13px var(--f-ui); color:var(--ink2); font-style:normal; grid-row:1/3; grid-column:2; align-self:center}
 .wsets{display:flex; flex-direction:column; gap:6px}
-.wsets > .lab{font:400 11px var(--f-mono); color:var(--ink2)}
+.wsets > .lab{font:400 13px var(--f-ui); color:var(--ink2)}
 .chipbox{display:flex; flex-wrap:wrap; gap:6px}
 .lab .mini{all:unset; cursor:pointer; margin-left:10px; text-decoration:underline; text-underline-offset:3px; color:var(--ink2)}
 .lab .mini:hover{color:var(--harm)}
 .lab .mini:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
-.chipbox button{all:unset; cursor:pointer; font:600 12px var(--f-mono); padding:5px 9px; border:1px solid var(--line); color:var(--ink)}
+.chipbox button{all:unset; cursor:pointer; font:600 13.5px var(--f-ui); padding:5px 9px; border:1px solid var(--line); color:var(--ink)}
 #whchips button{border-style:dashed; color:var(--ink2)}
 .chipbox button:hover, .chipbox button[aria-current="true"]{border-color:var(--harm); color:var(--harm)}
 .chipbox button:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 .seg{display:inline-flex; border:1.5px solid var(--ink)}
-.seg button{all:unset; cursor:pointer; font:600 12px var(--f-mono); padding:7px 10px; color:var(--ink2)}
+.seg button{all:unset; cursor:pointer; font:600 13.5px var(--f-ui); padding:7px 10px; color:var(--ink2)}
 .seg button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
 .seg button:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 .controls .chk{flex-direction:row; align-items:center; gap:8px}
@@ -912,8 +914,8 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wprog{height:6px; background:var(--ground2); border:1px solid var(--line)}
 .wprog i{display:block; height:100%; width:0; background:var(--harm)}
 @media (prefers-reduced-motion:no-preference){ .wprog i{transition:width .4s} }
-.leaflet-container{font:400 11px var(--f-mono)!important; background:var(--ground2)!important}
-.leaflet-control-attribution{font:400 10px var(--f-mono)!important}
+.leaflet-container{font:400 13px var(--f-ui)!important; background:var(--ground2)!important}
+.leaflet-control-attribution{font:400 12px var(--f-ui)!important}
 
 /* --- karsilastir --- */
 .cmp-pick{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px}
@@ -922,7 +924,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .slot .controls select{max-width:100%}
 .picker{border:1.5px solid var(--ink); padding:16px; display:flex; flex-direction:column; gap:14px; background:var(--ground)}
 .cmp-sum{font-size:19px; line-height:1.5; margin:0; max-width:66ch}
-table.cmp{border-collapse:collapse; font:400 12px var(--f-mono); width:100%; max-width:860px; font-variant-numeric:tabular-nums}
+table.cmp{border-collapse:collapse; font:400 13.5px var(--f-ui); width:100%; max-width:860px; font-variant-numeric:tabular-nums}
 table.cmp th{font-weight:600; color:var(--ink2); text-align:left; padding:7px 12px 7px 0; border-bottom:1.5px solid var(--ink)}
 table.cmp td{padding:7px 12px 7px 0; border-bottom:1px solid var(--line)}
 table.cmp td:first-child{font:400 15px var(--f-body)}
@@ -934,7 +936,7 @@ table.cmp .r{text-align:right}
 .about dt{font:600 22px/1.05 var(--f-disp)}
 .about dd{margin:4px 0 0; color:var(--ink2); font-size:16px; max-width:64ch}
 @media (max-width:860px){ .about{grid-template-columns:1fr} }
-.foot{border-top:1.5px solid var(--ink); padding-block:20px 40px; font:400 11px/1.8 var(--f-mono); color:var(--ink2)}
+.foot{border-top:1.5px solid var(--ink); padding-block:20px 40px; font:400 13px/1.8 var(--f-ui); color:var(--ink2)}
 .foot p{margin:0}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes rise{from{opacity:0}to{opacity:1}}
@@ -1966,7 +1968,283 @@ async function onFiles(files) {
 let SERVER = false, WMAP = null, WLAYER = null, WSELP = null, WLEVEL = "il", WBUSY = false;
 const $ = id => document.getElementById(id);
 function wMsg(t, err) { const m = $("wmsg"); m.textContent = t || ""; m.className = "msg" + (err ? " err" : ""); }
+/* ================= INTERNET SURUMU (sunucusuz hesaplama) =================
+   Sayfa GitHub Pages gibi statik bir yerde acilip yaninda veri1/meta.json bulunursa (python web_veri.py),
+   sunucu.py'nin hazir dunya verisi yolu (fast_region + payload) burada, tarayicida calisir.
+   Yer arama dogrudan OpenStreetMap Nominatim'e gider. FIRMS'ten canli indirme yoktur. */
+let WEB = null;
+const WJOBS = {}, WTILES = new Map(), WNOM = new Map();
+const W_DAY0 = Date.UTC(2000, 0, 1), W_CELL = 0.25, W_MAXTILE = 40;
+const W_EDGES = [0, 0.4, 0.75, 1.1, 1.6, 2.2, 3.2, 4.5, 6.5, 9, 13, 18, 26, 36, 52, 75, 105, 150, 220, 320, 1e9];
+const W_LEVEL_ZOOM = { ulke: 3, il: 5, ilce: 8, sehir: 10 };
+let W_NOM_LAST = 0;
+function tileUrl() { return WEB ? "https://tile.openstreetmap.org/{z}/{x}/{y}.png" : "/karo/{z}/{x}/{y}.png"; }
+async function webProbe() {
+  /* veri klasorlu (veri1/meta.json) ya da duz (meta.json, karolar ana dizinde) yuklenmis olabilir */
+  for (const [path, flat] of [["veri1/meta.json", false], ["meta.json", true]]) {
+    try { const r = await fetch(path, { cache: "no-cache" }); if (!r.ok) continue; const m = await r.json(); if (m && m.tiles) { m.flat = flat; return m; } }
+    catch (e) {}
+  }
+  return null;
+}
+async function webApi(path, opt) {
+  const u = new URL(path, location.href), q = u.searchParams, p = u.pathname;
+  if (p.endsWith("/api/durum")) return { ok: true, web: true };
+  if (p.endsWith("/api/veri_setleri")) return [{ key: "DUNYA", ad: "Dünya (tüm ülkeler)", olay: "", kutu: [-180, -90, 180, 90], y0: WEB.years[0], y1: WEB.years[WEB.years.length - 1] }];
+  if (p.endsWith("/api/ara")) { const s = (q.get("q") || "").trim(); if (!s) throw new Error("arama metni boş"); return webSearch(s.slice(0, 200)); }
+  if (p.endsWith("/api/ters")) return webReverse(+q.get("lat"), +q.get("lon"), q.get("duzey") || "il");
+  if (p.endsWith("/api/bolge")) {
+    const spec = JSON.parse((opt && opt.body) || "{}"), id = Math.random().toString(36).slice(2, 14);
+    const job = WJOBS[id] = { durum: "çalışıyor", mesaj: "veri parçaları indiriliyor", yapilan: 0, toplam: 0, t0: performance.now(), sonuc: null };
+    webRegion(spec, job).then(r => { job.sonuc = r; job.durum = "bitti"; }).catch(e => { console.error(e); job.durum = "hata"; job.mesaj = e.message || String(e); });
+    return { id };
+  }
+  if (p.endsWith("/api/is")) { const j = WJOBS[q.get("id")]; if (!j) throw new Error("iş bulunamadı");
+    return { durum: j.durum, mesaj: j.mesaj, yapilan: j.yapilan, toplam: j.toplam, onbellek: 0, sure: Math.round((performance.now() - j.t0) / 1000) }; }
+  if (p.endsWith("/api/sonuc")) { const j = WJOBS[q.get("id")]; if (!j || !j.sonuc) throw new Error("sonuç hazır değil"); return j.sonuc; }
+  throw new Error("Bu işlem internet sürümünde yok.");
+}
+/* ---- yer arama (Nominatim, saniyede en fazla 1 istek, oturum onbellegi) ---- */
+async function wNom(path, params) {
+  const key = path + JSON.stringify(params);
+  if (WNOM.has(key)) return WNOM.get(key);
+  const wait = 1100 - (Date.now() - W_NOM_LAST); if (wait > 0) await new Promise(r => setTimeout(r, wait));
+  W_NOM_LAST = Date.now();
+  let r;
+  try { r = await fetch("https://nominatim.openstreetmap.org/" + path + "?" + new URLSearchParams(params)); }
+  catch (e) { throw new Error("Yer arama servisine ulaşılamadı (internet bağlantısını kontrol et)."); }
+  if (!r.ok) throw new Error("Yer arama servisi hata verdi (" + r.status + "). Biraz sonra tekrar dene.");
+  const j = await r.json(); WNOM.set(key, j); return j;
+}
+function wBoxGeom(w, s, e, n) { return { type: "Polygon", coordinates: [[[w, s], [e, s], [e, n], [w, n], [w, s]]] }; }
+function wPlace(it) {
+  const bb = (it.boundingbox || [0, 0, 0, 0]).map(Number);
+  let w = bb[2], s = bb[0], e = bb[3], n = bb[1];
+  let geom = it.geojson || {};
+  if (geom.type !== "Polygon" && geom.type !== "MultiPolygon") {
+    const pad = .15, cx = +(it.lon != null ? it.lon : (w + e) / 2), cy = +(it.lat != null ? it.lat : (s + n) / 2);
+    w = Math.min(w, cx - pad); s = Math.min(s, cy - pad); e = Math.max(e, cx + pad); n = Math.max(n, cy + pad);
+    geom = wBoxGeom(w, s, e, n);
+  }
+  const addr = it.address || {}, name = it.name || (it.display_name || "").split(",")[0];
+  return { ad: name, tam: it.display_name || name, tur: it.addresstype || it.type || "", ulke: addr.country || "",
+           bbox: [w, s, e, n], lat: +(it.lat != null ? it.lat : (s + n) / 2), lon: +(it.lon != null ? it.lon : (w + e) / 2), geojson: geom };
+}
+async function webSearch(q) {
+  const m = q.match(/^\s*(-?\d+(?:[.,]\d+)?)\s*[,; ]\s*(-?\d+(?:[.,]\d+)?)\s*$/);
+  if (m) { const la = +m[1].replace(",", "."), lo = +m[2].replace(",", ".");
+    if (Math.abs(la) <= 90 && Math.abs(lo) <= 180) return [{ ad: `${la.toFixed(2)}, ${lo.toFixed(2)} çevresi`, tam: `${la.toFixed(2)}° enlem, ${lo.toFixed(2)}° boylam çevresinde 1° × 1° kutu`, tur: "kutu", ulke: "",
+      bbox: [lo - .5, la - .5, lo + .5, la + .5], lat: la, lon: lo, geojson: wBoxGeom(lo - .5, la - .5, lo + .5, la + .5) }]; }
+  const res = await wNom("search", { q, format: "jsonv2", polygon_geojson: 1, polygon_threshold: 0.005, addressdetails: 1, limit: 8, "accept-language": "tr,en" });
+  const out = res.map(wPlace);
+  out.sort((a, b) => (a.geojson.type !== "Polygon" || a.geojson.coordinates[0].length > 5 ? 0 : 1) - (b.geojson.type !== "Polygon" || b.geojson.coordinates[0].length > 5 ? 0 : 1));
+  return out;
+}
+async function webReverse(lat, lon, level) {
+  const it = await wNom("reverse", { lat: lat.toFixed(4), lon: lon.toFixed(4), zoom: W_LEVEL_ZOOM[level] || 5, format: "jsonv2", polygon_geojson: 1, polygon_threshold: 0.005, addressdetails: 1, "accept-language": "tr,en" });
+  if (!it || it.error) throw new Error("Bu noktada bir yerleşim sınırı bulunamadı (deniz olabilir).");
+  return wPlace(it);
+}
+/* ---- geometri ---- */
+function wRings(geom) {
+  const t = geom && geom.type, c = geom && geom.coordinates, polys = t === "Polygon" ? [c] : t === "MultiPolygon" ? c : [], out = [];
+  for (const poly of polys) for (const ring of poly) {
+    if (!ring || ring.length < 3) continue;
+    const a = ring.map(p => [+p[0], +p[1]]);
+    if (a[0][0] !== a[a.length - 1][0] || a[0][1] !== a[a.length - 1][1]) a.push([a[0][0], a[0][1]]);
+    out.push(a);
+  }
+  return out;
+}
+function wPointsIn(px, py, rings) {      /* cift-tek kurali; noktalar enleme gore siralanir (sunucu.py points_in ile ayni) */
+  const n = px.length, order = new Uint32Array(n); for (let i = 0; i < n; i++) order[i] = i;
+  order.sort((a, b) => py[a] - py[b]);
+  const ys = new Float64Array(n), xs = new Float64Array(n); for (let i = 0; i < n; i++) { ys[i] = py[order[i]]; xs[i] = px[order[i]]; }
+  const par = new Uint8Array(n), lb = v => { let lo = 0, hi = n; while (lo < hi) { const m = (lo + hi) >> 1; if (ys[m] < v) lo = m + 1; else hi = m; } return lo; };
+  for (const ring of rings) for (let k = 0; k < ring.length - 1; k++) {
+    const x0 = ring[k][0], y0 = ring[k][1], x1 = ring[k + 1][0], y1 = ring[k + 1][1];
+    if (y0 === y1) continue;
+    const i0 = lb(Math.min(y0, y1)), i1 = lb(Math.max(y0, y1)), sl = (x1 - x0) / (y1 - y0);
+    for (let i = i0; i < i1; i++) if (xs[i] < x0 + (ys[i] - y0) * sl) par[i] ^= 1;
+  }
+  const out = new Uint8Array(n); for (let i = 0; i < n; i++) out[order[i]] = par[i]; return out;
+}
+/* ---- karo okuma ---- */
+async function wTile(ti, tj) {
+  const key = ti + "_" + tj;
+  if (WTILES.has(key)) return WTILES.get(key);
+  if (!WEB.tileDir) { WEB.tileDir = new Map(); WEB.tiles.forEach((t, i) => WEB.tileDir.set(t, (WEB.dirs || [])[i] || 1)); }
+  if (!WEB.tileDir.has(key)) { WTILES.set(key, null); return null; }
+  const r = await fetch(WEB.flat ? `T${key}.dat` : `veri${WEB.tileDir.get(key)}/T${key}.dat`);
+  if (!r.ok) throw new Error(`Veri parçası indirilemedi (T${key}, ${r.status}).`);
+  const buf = await new Response(r.body.pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+  const dv = new DataView(buf);
+  if (String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3)) !== "ATK1") throw new Error("Veri parçası bozuk: T" + key);
+  const base = dv.getInt32(4, true), n = dv.getUint32(8, true), col = i => new Uint16Array(buf, 12 + i * 2 * n, n);
+  const t = { ti, tj, base, n, d: col(0), c: col(1), M: col(2), V: col(3) };
+  WTILES.set(key, t);
+  if (WTILES.size > 60) WTILES.delete(WTILES.keys().next().value);
+  return t;
+}
+/* ---- yontem (build_app.py / sunucu.py ile ayni) ---- */
+const wDayOf = (y, m, d) => Math.round((Date.UTC(y, m, d) - W_DAY0) / 864e5);
+const wYearOf = d => new Date(W_DAY0 + d * 864e5).getUTCFullYear();
+const wIso = d => new Date(W_DAY0 + d * 864e5).toISOString().slice(0, 10);
+function wSplit(ov) {
+  const nom = ov.filter(y => y <= 2020);
+  if (nom.length >= 3) { const ntr = Math.max(2, Math.round(nom.length * 2 / 3)); return [nom.slice(0, ntr), nom.slice(ntr), ov.filter(y => y > 2020)]; }
+  const ntr = Math.max(1, Math.round(ov.length * 0.6)); return [ov.slice(0, ntr), ov.slice(ntr), []];
+}
+const wYrLabel = ys => !ys.length ? "" : ys.length === 1 ? String(ys[0]) : `${ys[0]}–${ys[ys.length - 1]}`;
+function wFit(V, M, idx, minN) {
+  const nb = W_EDGES.length - 1, cnt = new Float64Array(nb), sv = new Float64Array(nb), sm = new Float64Array(nb);
+  for (const i of idx) { const v = V[i]; if (!(v > 0)) continue; let lo = 0, hi = nb - 1;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (v > W_EDGES[mid + 1]) lo = mid + 1; else hi = mid; }   /* (a, b] araliklari */
+    cnt[lo]++; sv[lo] += v; sm[lo] += M[i]; }
+  const x = [], y = [];
+  for (let b = 0; b < nb; b++) if (cnt[b] >= minN) { x.push(sv[b] / cnt[b]); y.push(Math.max(1e-4, sm[b] / cnt[b])); }
+  if (x.length < 4) return null;
+  for (let i = 1; i < y.length; i++) y[i] = Math.max(y[i], y[i - 1]);
+  return [x, y];
+}
+function wCurveF(V, x, y, sHi) {
+  const lx = x.map(Math.log), ly = y.map(v => Math.log(Math.max(v, 1e-6))), L = lx.length;
+  const hi = sHi == null ? (ly[L - 1] - ly[L - 2]) / (lx[L - 1] - lx[L - 2]) : sHi, lo = (ly[1] - ly[0]) / (lx[1] - lx[0]);
+  const out = new Float64Array(V.length);
+  for (let i = 0; i < V.length; i++) { const v = V[i]; if (!(v > 0)) continue; const lv = Math.log(v); let e;
+    if (lv > lx[L - 1]) e = ly[L - 1] + hi * (lv - lx[L - 1]);
+    else if (lv < lx[0]) e = ly[0] + lo * (lv - lx[0]);
+    else { let a = 0, b = L - 1; while (b - a > 1) { const m = (a + b) >> 1; if (lx[m] <= lv) a = m; else b = m; }
+      e = lx[b] === lx[a] ? ly[a] : ly[a] + (ly[b] - ly[a]) * (lv - lx[a]) / (lx[b] - lx[a]); }
+    out[i] = Math.exp(e); }
+  return out;
+}
+function wCorr(a, b) {
+  const n = a.length; let ma = 0, mb = 0; for (let i = 0; i < n; i++) { ma += a[i]; mb += b[i]; } ma /= n; mb /= n;
+  let sab = 0, saa = 0, sbb = 0; for (let i = 0; i < n; i++) { const x = a[i] - ma, y = b[i] - mb; sab += x * y; saa += x * x; sbb += y * y; }
+  return sab / Math.sqrt(saa * sbb);
+}
+function wSumBy(keys, vals, mask) { const m = new Map(); for (let i = 0; i < keys.length; i++) { if (mask && !mask[i]) continue; m.set(keys[i], (m.get(keys[i]) || 0) + vals[i]); } return m; }
+function wPayload(R, name, place, note) {
+  const n = R.d.length, yil = new Int32Array(n), yc = new Map();
+  for (let i = 0; i < n; i++) { const d = R.d[i]; let y = yc.get(d); if (y === undefined) { y = wYearOf(d); yc.set(d, y); } yil[i] = y; }
+  const D = WEB.default; let x = D.x, y = D.y, hi = D.hi, how = "Türkiye çok yıllı eğrisi (bölgeye özgü eğri için tespit az)", curve = null;
+  const sV = wSumBy(yil, R.V), sM = wSumBy(yil, R.M);
+  const ov = [...sV.keys()].filter(yr => sV.get(yr) > 0 && (sM.get(yr) || 0) > 0).sort((a, b) => a - b);
+  let A = [], T = [], DR = [], fit = null;
+  const idxWhere = f => { const o = []; for (let i = 0; i < n; i++) if (f(i)) o.push(i); return o; };
+  if (ov.length >= 3) { [A, T, DR] = wSplit(ov); const s = new Set(A); fit = wFit(R.V, R.M, idxWhere(i => s.has(yil[i])), 12); }
+  else { const s = new Set(ov), sub = idxWhere(i => s.has(yil[i]));
+    if (sub.length) { const days = [...new Set(sub.map(i => R.d[i]))].sort((a, b) => a - b), cut = days[Math.floor(days.length * 0.6)];
+      fit = wFit(R.V, R.M, sub.filter(i => R.d[i] < cut), 12); } }
+  if (fit) { [x, y] = fit; hi = 1.0; how = "bölgeye özgü eğri"; curve = { x: x.map(v => +v.toFixed(4)), y: y.map(v => +v.toFixed(5)), hi: 1.0 }; }
+  const f = wCurveF(R.V, x, y, hi);
+  /* calibrate */
+  const sF = wSumBy(yil, f), ov2 = [...sF.keys()].filter(yr => sF.get(yr) > 0 && (sM.get(yr) || 0) > 0).sort((a, b) => a - b);
+  let k = D.k, calib, tr, te;
+  if (!ov2.length) { calib = "bu bölgede MODIS ve VIIRS'in birlikte olduğu dönem yok; varsayılan katsayı."; }
+  else {
+    let labTr, labTe;
+    if (ov2.length >= 3) { const [a, t] = wSplit(ov2), sa = new Set(a), st = new Set(t);
+      tr = Uint8Array.from(yil, v => sa.has(v)); te = Uint8Array.from(yil, v => st.has(v)); labTr = wYrLabel(a); labTe = wYrLabel(t); }
+    else { const so = new Set(ov2), sub = idxWhere(i => so.has(yil[i])), days = [...new Set(sub.map(i => R.d[i]))].sort((a, b) => a - b), cut = days[Math.floor(days.length * 0.6)];
+      tr = new Uint8Array(n); te = new Uint8Array(n); for (const i of sub) { if (R.d[i] < cut) tr[i] = 1; else te[i] = 1; }
+      labTr = `${wIso(days[0])} – ${wIso(cut - 1)}`; labTe = `${wIso(cut)} sonrası`; }
+    let mTr = 0, fTr = 0, mTe = 0, fTe = 0, anyTe = false;
+    for (let i = 0; i < n; i++) { if (tr[i]) { mTr += R.M[i]; fTr += f[i]; } if (te[i]) { anyTe = true; mTe += R.M[i]; fTe += f[i]; } }
+    k = mTr / Math.max(fTr, 1e-9);
+    const ratio = anyTe ? k * fTe / Math.max(mTe, 1) : null;
+    calib = `eğitim ${labTr}` + (labTe ? `, test ${labTe}` : "") + (ratio ? `; test döneminde toplam isabet %${(100 * ratio).toFixed(0)}` : "");
+  }
+  let extra = "";
+  if (T.length) {
+    const st = new Set(T), mask = Uint8Array.from(yil, v => st.has(v));
+    const dm = wSumBy(R.d, R.M, mask), df = wSumBy(R.d, f, mask);
+    if (dm.size > 2) { const ks = [...dm.keys()]; extra = `; test günlük seyir r=${wCorr(ks.map(q => Math.log1p(dm.get(q))), ks.map(q => Math.log1p(k * df.get(q)))).toFixed(2)}`; }
+    const wk = Array.from(R.d, v => Math.floor(v / 7)), wm = wSumBy(wk, R.M, mask), wf = wSumBy(wk, f, mask);
+    if (wm.size > 4) { const ks = [...wm.keys()]; extra += `, haftalık r=${wCorr(ks.map(q => Math.log1p(wm.get(q))), ks.map(q => Math.log1p(k * wf.get(q)))).toFixed(2)}`; }
+  }
+  if (DR.length) extra += "; yörünge kayması yıllarında ham MODIS ÷ uyumlu seri: " + DR.slice().sort((a, b) => a - b).map(yr => `${yr} %${Math.round(sM.get(yr) / Math.max(k * sF.get(yr), 1e-9) * 100)}`).join(", ");
+  if (!curve) curve = { x: x.map(v => +(+v).toFixed(4)), y: y.map(v => +(+v).toFixed(5)), hi };
+  /* hucreler */
+  const cix = new Map(), cl = [], co = [], c = new Int32Array(n);
+  for (let i = 0; i < n; i++) { const key = R.lat[i] * 1e4 + R.lon[i]; let j = cix.get(key); if (j === undefined) { j = cl.length; cix.set(key, j); cl.push(+R.lat[i].toFixed(3)); co.push(+R.lon[i].toFixed(3)); } c[i] = j; }
+  /* yillik belirsizlik */
+  let unc = null;
+  const nomOv = ov.filter(yr => yr <= 2020);
+  if (nomOv.length >= 3) { const vals = nomOv.filter(yr => sM.get(yr) > 0).map(yr => Math.log(k * sF.get(yr) / sM.get(yr)));
+    if (vals.length >= 3) { const mu = vals.reduce((a, b) => a + b, 0) / vals.length; unc = +Math.sqrt(vals.reduce((a, b) => a + (b - mu) ** 2, 0) / (vals.length - 1)).toFixed(4); if (!isFinite(unc)) unc = null; } }
+  let nTr = 0; if (A.length) { const sa = new Set(A); for (let i = 0; i < n; i++) if (sa.has(yil[i])) nTr += R.M[i]; } else for (let i = 0; i < n; i++) nTr += R.M[i];
+  const guven = unc != null && unc < 0.12 && nTr >= 3000 ? "yüksek" : unc != null && unc < 0.25 && nTr >= 800 ? "orta" : "düşük";
+  const calibFull = `Kalibrasyon yıllarında ${nTr.toLocaleString("en-US").replace(/,/g, ".")} MODIS tespiti. ${how}; ${calib}${extra}`;
+  return { unc, guven, key: "Q" + Math.random().toString(16).slice(2, 10), name, cell: W_CELL, k: +k.toFixed(4), calib: calibFull, note,
+    cities: place.lat != null ? [{ n: place.ad || name, lat: place.lat, lon: place.lon }] : [],
+    cells: { lat: cl, lon: co }, c: Array.from(c), d: Array.from(R.d), m: Array.from(R.M), v: Array.from(R.V, v => Math.round(v * 10)),
+    curve, boundary: place.geojson };
+}
+async function webRegion(sp, job) {
+  const place = sp.yer || {};
+  const geom = place.geojson || (sp.bbox ? wBoxGeom(...sp.bbox) : null);
+  if (!geom) throw new Error("Bölge sınırı yok.");
+  place.geojson = geom;
+  const rings = wRings(geom); if (!rings.length) throw new Error("Sınır geometrisi okunamadı.");
+  let w = 180, s = 90, e = -180, nn = -90;
+  for (const r of rings) for (const p of r) { w = Math.min(w, p[0]); e = Math.max(e, p[0]); s = Math.min(s, p[1]); nn = Math.max(nn, p[1]); }
+  const Y0 = WEB.years[0], Y1 = WEB.years[WEB.years.length - 1];
+  let y0 = Math.min(+sp.y0 || Y0, +sp.y1 || Y1), y1 = Math.max(+sp.y0 || Y0, +sp.y1 || Y1);
+  let clipNote = "";
+  if (y0 < Y0 || y1 > Y1) { clipNote = ` İnternet sürümünde veri ${Y0}–${Y1} arası; dönem buna göre kırpıldı.`; y0 = Math.max(y0, Y0); y1 = Math.min(y1, Y1); }
+  if (y0 > y1) throw new Error(`İnternet sürümünde yalnızca ${Y0}–${Y1} yılları var.`);
+  const tis = [], tjs = [];
+  for (let a = Math.floor(s / 10); a <= Math.floor(Math.min(nn, 89.99) / 10); a++) tis.push(a);
+  for (let b = Math.floor(w / 10); b <= Math.floor(Math.min(e, 179.99) / 10); b++) tjs.push(b);
+  const list = []; for (const a of tis) for (const b of tjs) list.push([a, b]);
+  if (list.length > W_MAXTILE) throw new Error(`Bölge internet sürümü için çok geniş (${Math.round(e - w)}° × ${Math.round(nn - s)}°). Daha küçük bir alan seç ya da bilgisayardaki tam sürümü kullan.`);
+  job.toplam = list.length; job.mesaj = "veri parçaları indiriliyor";
+  const tiles = [];
+  for (let i = 0; i < list.length; i += 6) {
+    const got = await Promise.all(list.slice(i, i + 6).map(([a, b]) => wTile(a, b).then(t => { job.yapilan++; return t; })));
+    tiles.push(...got.filter(Boolean));
+  }
+  job.mesaj = "hesaplanıyor";
+  await new Promise(r => setTimeout(r, 0));
+  const d0 = wDayOf(y0, 0, 1), d1 = wDayOf(y1, 11, 31);
+  const lat = [], lon = [], dd = [], MM = [], VV = [];
+  for (const t of tiles) {
+    for (let i = 0; i < t.n; i++) {
+      const d = t.base + t.d[i]; if (d < d0 || d > d1) continue;
+      const ci = (t.c[i] / 40) | 0, cj = t.c[i] - ci * 40, la = t.ti * 10 + (ci + .5) * W_CELL, lo = t.tj * 10 + (cj + .5) * W_CELL;
+      if (lo < w - W_CELL || lo > e + W_CELL || la < s - W_CELL || la > nn + W_CELL) continue;
+      lat.push(la); lon.push(lo); dd.push(d); MM.push(t.M[i]); VV.push(t.V[i] / 10);
+    }
+  }
+  if (!dd.length) throw new Error("Bu bölgede ve dönemde hiç yangın tespiti yok.");
+  /* hucrelerin sinir icindeki alan payi: 6 x 6 ornek nokta */
+  const cmap = new Map(), cla = [], clo = [];
+  for (let i = 0; i < lat.length; i++) { const key = lat[i] * 1e4 + lon[i]; if (!cmap.has(key)) { cmap.set(key, cla.length); cla.push(lat[i]); clo.push(lon[i]); } }
+  const K = 6, nc = cla.length, px = new Float64Array(nc * K * K), py = new Float64Array(nc * K * K);
+  for (let j = 0, q = 0; j < nc; j++) for (let gy = 0; gy < K; gy++) for (let gx = 0; gx < K; gx++, q++) {
+    px[q] = clo[j] + ((gx + .5) / K * W_CELL - W_CELL / 2); py[q] = cla[j] + ((gy + .5) / K * W_CELL - W_CELL / 2); }
+  const inside = wPointsIn(px, py, rings), frac = new Float64Array(nc);
+  for (let j = 0; j < nc; j++) { let a = 0; for (let q = j * K * K; q < (j + 1) * K * K; q++) a += inside[q]; frac[j] = a / (K * K); }
+  let keep = new Uint8Array(nc), nk = 0, rule = "alanının en az yarısı sınırın içinde kalan 0,25° hücreler";
+  for (let j = 0; j < nc; j++) if (frac[j] >= .5) { keep[j] = 1; nk++; }
+  if (!nk) { const mx = Math.max(...frac); if (mx > 0) for (let j = 0; j < nc; j++) if (frac[j] === mx) { keep[j] = 1; nk++; }
+    rule = "bölge bir hücreden küçük; en çok örtüşen 0,25° hücre"; }
+  if (!nk) throw new Error("Bu bölgede ve dönemde hiç yangın tespiti yok.");
+  const R = { lat: [], lon: [], d: [], M: [], V: [] };
+  for (let i = 0; i < lat.length; i++) { if (!keep[cmap.get(lat[i] * 1e4 + lon[i])]) continue; if (!(MM[i] > 0) && !(VV[i] > 0)) continue;
+    R.lat.push(lat[i]); R.lon.push(lon[i]); R.d.push(dd[i]); R.M.push(MM[i]); R.V.push(VV[i]); }
+  if (!R.d.length) throw new Error("Bu bölgede ve dönemde hiç yangın tespiti yok.");
+  const note = `Hazır dünya verisinden tarayıcıda hesaplandı (Dünya veri seti ${Y0}–${Y1}, MODIS + VIIRS, kalıcı kaynaklar ayıklanmış). Kullanılan: ${rule}, ${nk} hücre.` + clipNote;
+  const obj = wPayload(R, place.ad || "Seçilen alan", place, note);
+  obj.name = place.ad || "Seçilen alan";
+  obj.donem = y0 !== y1 ? `${y0}–${y1}` : String(y0);
+  job.mesaj = `${R.d.length.toLocaleString("en-US").replace(/,/g, ".")} hücre-gün hazır dünya verisinden (${((performance.now() - job.t0) / 1000).toFixed(1)} sn)`;
+  return obj;
+}
 async function api(path, opt) {
+  if (WEB) return webApi(path, opt);
   const r = await fetch(path, Object.assign({ cache: "no-store" }, opt || {}));
   let j = null; try { j = await r.json(); } catch (e) {}
   if (!r.ok) throw new Error((j && j.hata) || ("sunucu hatası " + r.status));
@@ -1976,6 +2254,7 @@ const pct = (v, sign) => (sign ? (v >= 0 ? "+" : "−") : "") + "%" + nf(Math.ab
 async function wProbe() {
   if (!/^https?:$/.test(location.protocol)) { SERVER = false; $("woff").hidden = false; $("won").hidden = true; return false; }
   try { const j = await api("/api/durum"); SERVER = !!(j && j.ok); } catch (e) { SERVER = false; }
+  if (!SERVER && !WEB) { WEB = await webProbe(); SERVER = !!WEB; }
   $("woff").hidden = SERVER; $("won").hidden = !SERVER;
   return SERVER;
 }
@@ -1997,7 +2276,7 @@ async function wMap() {
   if (WMAP) { WMAP.invalidateSize(); return; }
   try { await loadLeaflet(); } catch (e) { wMsg(e.message, true); return; }
   WMAP = L.map("wmap", { worldCopyJump: true, minZoom: 2 }).setView([39, 30], 4);
-  L.tileLayer("/karo/{z}/{x}/{y}.png", { maxZoom: 12, attribution: "&copy; OpenStreetMap katkıcıları" }).addTo(WMAP);
+  L.tileLayer(tileUrl(), { maxZoom: 12, attribution: "&copy; OpenStreetMap katkıcıları" }).addTo(WMAP);
   if (wDark()) $("wmap").classList.add("dark");
   let b0 = null, rect = null, skip = false;
   WMAP.on("mousedown", e => { if (WLEVEL !== "kutu") return; b0 = e.latlng; WMAP.dragging.disable();
@@ -2348,7 +2627,7 @@ function globeDraw() {
     ctx.globalAlpha = 1; ctx.lineWidth = 2; ctx.stroke(main[0]);
     proj(rg.lab[0], rg.lab[1], rg.r); if (P[2] > .1) labs.push([rg.nm + " " + ft(rg.lt), C(rg.cv), P[0], P[1]]); });
   if (sky) sky.sats.forEach(s => sat(s, true));
-  ctx.font = "600 13px " + C("--f-mono"); ctx.lineJoin = "round";
+  ctx.font = "600 14px " + C("--f-ui"); ctx.lineJoin = "round";
   labs.forEach(([txt, col, x, y]) => { ctx.lineWidth = 5; ctx.strokeStyle = "#080b14"; ctx.strokeText(txt, x + 10, y - 6); ctx.fillStyle = col; ctx.fillText(txt, x + 10, y - 6); });
   /* secilen yer */
   if (GL.pick) { proj(GL.pick[0], GL.pick[1]); if (P[2] > 0) { ctx.beginPath(); ctx.arc(P[0], P[1], 9, 0, 2 * Math.PI); ctx.strokeStyle = C("--ground"); ctx.lineWidth = 5; ctx.stroke();
@@ -2796,7 +3075,7 @@ async function pkOpen(slot) {
   try { await loadLeaflet(); } catch (e) { pkMsg(e.message, true); return; }
   if (!PK.map) {
     PK.map = L.map("pk-map", { worldCopyJump: true, minZoom: 2 }).setView([39, 30], 4);
-    L.tileLayer("/karo/{z}/{x}/{y}.png", { maxZoom: 12, attribution: "&copy; OpenStreetMap katkıcıları" }).addTo(PK.map);
+    L.tileLayer(tileUrl(), { maxZoom: 12, attribution: "&copy; OpenStreetMap katkıcıları" }).addTo(PK.map);
     if (wDark()) $("pk-map").classList.add("dark");
     PK.map.on("click", async e => { if (PK.busy) return; pkMsg("sınır aranıyor…");
       try { pkSelect(await api(`/api/ters?lat=${e.latlng.lat}&lon=${e.latlng.lng}&duzey=${PK.level}`)); } catch (er) { pkMsg(er.message, true); } });
@@ -2991,6 +3270,10 @@ const I18N = {
 "Eğilim için en az 5 yıl seç.":"Select at least 5 years for a trend.",
 "Seçilen dönemlerden birinde hiç tespit yok. Yıl aralığını değiştir.":"One of the selected periods has no detections. Change the year range.",
 "Bu bölgede ve dönemde hiç yangın tespiti yok.":"No fire detections in this area and period.",
+"veri parçaları indiriliyor":"downloading data parts",
+"hesaplanıyor":"computing",
+"Yer arama servisine ulaşılamadı (internet bağlantısını kontrol et).":"Could not reach the place search service (check your internet connection).",
+"Bu işlem internet sürümünde yok.":"This action is not available in the online version.",
 "Küre":"Globe","Düz harita":"Flat map","Toplam":"Total","Ay ay":"By month","Değişim":"Change","Oynat":"Play","Durdur":"Pause",
 "Bu yerin takvimini hesapla":"Compute this place's calendar","Harita görünümü":"Map view","Küre görünümü":"Globe view","Ay":"Month",
 "Dünya yangın küresi: uyduların gördüğü yangınlarla çizilmiş. Ok tuşlarıyla döndür, Enter ile ortadaki yeri seç.":"Fire globe drawn from fires seen by satellites. Rotate with the arrow keys, press Enter to select the centre.",
@@ -3089,6 +3372,14 @@ const I18R = [
   [/^"(.+)" için sonuç yok\. Başka yazımla dene.*$/, "No results for \"$1\". Try another spelling."],
   [/^(\d+) sonuç\. Birini seç\.$/, "$1 results. Pick one."],
   [/(.+)\. Sonuçlar aşağıda; bölge listesine de eklendi\.$/, (m, a) => `${trx(a) || a}. Results below; also added to the region list.`],
+  [/^([\d.]+) hücre-gün hazır dünya verisinden \(([\d.,]+) sn\)/, (m, a, b) => `${N(a)} cell-days from the world dataset (${N(b)} s)`],
+  [/Hazır dünya verisinden tarayıcıda hesaplandı \(Dünya veri seti (\S+), MODIS \+ VIIRS, kalıcı kaynaklar ayıklanmış\)\. Kullanılan: (.+?), (\d+) hücre\.( İnternet sürümünde veri (\S+) arası; dönem buna göre kırpıldı\.)?/,
+    (m, y, rule, n, c, cy) => `Computed in your browser from the world dataset (${y}, MODIS + VIIRS, persistent sources removed). Used: ${rule.replace("alanının en az yarısı sınırın içinde kalan 0,25° hücreler", "0.25° cells with at least half their area inside the boundary").replace("bölge bir hücreden küçük; en çok örtüşen 0,25° hücre", "area smaller than one cell; best-overlapping 0.25° cell")}, ${n} cells.` + (c ? ` The online version has data for ${cy}; the period was trimmed.` : "")],
+  [/^Bölge internet sürümü için çok geniş \((\d+)° × (\d+)°\)\. Daha küçük bir alan seç ya da bilgisayardaki tam sürümü kullan\.$/, "Area too large for the online version ($1° × $2°). Pick a smaller area or use the full desktop version."],
+  [/^İnternet sürümünde yalnızca (\S+) yılları var\.$/, "The online version only covers $1."],
+  [/^Veri parçası indirilemedi \((\S+), (\d+)\)\.$/, "Could not download data part ($1, $2)."],
+  [/^Yer arama servisi hata verdi \((\d+)\)\. Biraz sonra tekrar dene\.$/, "The place search service returned an error ($1). Try again shortly."],
+  [/^(-?[\d.]+), (-?[\d.]+) çevresi$/, "around $1, $2"],
   [/^([\d.]+) hücre-gün hazır veri setinden \(([\d.,]+) sn\)/, (m, a, b) => `${N(a)} cell-days from the prepared dataset (${N(b)} s)`],
   [/^([\d.]+) hücre-gün hazır \((\d+) sn\)/, (m, a, b) => `${N(a)} cell-days ready (${b} s)`],
   [/^FIRMS: (\d+)\/(\d+) pencere \((\d+) önbellekten\)/, "FIRMS: $1/$2 windows ($3 from cache)"],
