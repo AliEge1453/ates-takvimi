@@ -11,18 +11,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/yerel/fonts.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
 /* Renk: arayuz notr grafit + tek vurgu (elektrik mavisi, --acc); veri renkleri ayri (uyumlu seri --harm, sensorler);
    isi haritasi termal kamera skalasi (--t0..--t4) degismedi.
-   Yazi: Big Shoulders Display yalnizca buyuk basliklar; geri kalan her sey (metin, etiket, sayi) Public Sans. */
+   Yazi: Space Grotesk basliklar; geri kalan her sey (metin, etiket, sayi) Public Sans. */
 :root{
   --ground:#f5f6f8; --ground2:#eaedf1; --ground3:#dde2e8; --ink:#0d1117; --ink2:#525b66; --line:#cbd2da; --cell0:#e2e6eb;
   --acc:#0b5fd6; --err:#c8102e;
   --viirs:#5a43d4; --modis:#b0620a; --harm:#d4163c; --peak:rgba(212,22,60,.11);
   --terra:#b0620a; --aqua:#0b8571; --snpp:#5a43d4;
   --t0:#f3e6b4; --t1:#efa752; --t2:#d95a2b; --t3:#a3223f; --t4:#4c1456;
-  --f-disp:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;
+  --f-disp:"Space Grotesk","Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
   --f-body:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
   --f-ui:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
   --f-mono:var(--f-ui);
@@ -53,7 +53,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 /* --- ust cubuk --- */
 .bar{position:sticky; top:0; z-index:30; background:var(--ground); border-bottom:1.5px solid var(--ink)}
 .bar .wrap{display:flex; align-items:center; gap:28px; min-height:56px}
-.brand{display:flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none; font:800 24px/1 var(--f-disp); text-transform:uppercase; letter-spacing:.01em; white-space:nowrap}
+.brand{display:flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none; font:700 21px/1 var(--f-disp); text-transform:uppercase; letter-spacing:.02em; white-space:nowrap}
 .brand svg{width:26px; height:26px; flex:none}
 .nav{display:flex; gap:22px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; font:600 13.5px var(--f-ui)}
 .nav::-webkit-scrollbar{display:none}
@@ -69,10 +69,10 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 main{display:block}
 .pg{padding-block:36px 72px; display:flex; flex-direction:column; gap:48px}
 .pg[data-page="ana"]{padding-top:0}
-.head h1{font:800 clamp(48px,8vw,96px)/.88 var(--f-disp); margin:0; letter-spacing:.005em}
+.head h1{font:700 clamp(40px,6.2vw,76px)/.95 var(--f-disp); margin:0; letter-spacing:-.025em}
 .head p{margin:12px 0 0; font-size:18px; color:var(--ink2); max-width:60ch}
-h2{font:600 34px/1 var(--f-disp); margin:0; text-wrap:balance}
-h3{font:600 22px/1.05 var(--f-disp); margin:0}
+h2{font:600 30px/1.08 var(--f-disp); margin:0; text-wrap:balance; letter-spacing:-.015em}
+h3{font:600 19px/1.15 var(--f-disp); margin:0; letter-spacing:-.01em}
 p{max-width:68ch}
 
 /* --- ana sayfa --- */
@@ -96,12 +96,12 @@ p{max-width:68ch}
 .gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1px solid var(--line); padding:6px 10px; font:600 13.5px var(--f-ui)}
 .gbar .btn{padding:4px 10px; font-size:12px}
 .gbar input{width:150px; accent-color:var(--acc)}
-.gbar b{display:inline-block; min-width:9ch; font:800 20px/1 var(--f-disp)}
+.gbar b{display:inline-block; min-width:9ch; font:700 17px/1 var(--f-disp)}
 #gyear b{min-width:4ch} #gyear span{color:var(--ink2)}
 .tourgo{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); padding:7px 12px; font-size:12px}
 .tour{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); width:min(340px, calc(100% - 32px)); background:var(--ground2); border:1.5px solid var(--ink); padding:14px 16px 16px; z-index:2}
 .tour-n{margin:0 0 6px; font:600 13px var(--f-ui); color:var(--ink2)}
-.tour h3{margin:0 0 8px; font:800 28px/1 var(--f-disp)}
+.tour h3{margin:0 0 8px; font:700 23px/1.05 var(--f-disp); letter-spacing:-.015em}
 .tour p#tourp{margin:0 0 14px; font-size:15px; line-height:1.45}
 .tour-b{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
 .tour-b .btn{padding:6px 12px; font-size:12px}
@@ -113,7 +113,7 @@ p{max-width:68ch}
 #gpickmsg{color:var(--acc); background:var(--ground2)}
 @media (max-width:640px){ .hero-tools, .gpick, .tour, .tourgo{position:static; margin:8px 16px 0; align-items:flex-start} .hrow{justify-content:flex-start} }
 .intro{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:36px 56px; align-items:start}
-.intro h1{font:800 clamp(64px,11vw,140px)/.84 var(--f-disp); text-transform:uppercase; letter-spacing:.005em; margin:0 0 22px}
+.intro h1{font:700 clamp(46px,7.6vw,100px)/.92 var(--f-disp); text-transform:uppercase; letter-spacing:-.03em; margin:0 0 22px}
 .lead{font-size:clamp(19px,2.1vw,22px); line-height:1.5; margin:0; max-width:46ch}
 .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
 .btn{display:inline-flex; align-items:center; font:600 14.5px var(--f-ui); text-decoration:none; padding:10px 16px; cursor:pointer; border:1.5px solid var(--ink); color:var(--ink); background:var(--ground)}
@@ -121,12 +121,12 @@ p{max-width:68ch}
 .btn:hover{background:var(--ink); color:var(--ground)}
 .btn.primary:hover{background:var(--acc); border-color:var(--acc); color:var(--ground)}
 .passlog{border-top:3px solid var(--ink)}
-.passlog h2{font:600 26px/1 var(--f-disp); padding:14px 0 10px; margin:0}
+.passlog h2{font:600 23px/1.05 var(--f-disp); letter-spacing:-.015em; padding:14px 0 10px; margin:0}
 .passlog p{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:0; padding:0 0 10px}
 table.pass{width:100%; border-collapse:collapse; font:400 13.5px var(--f-ui); font-variant-numeric:tabular-nums}
 table.pass th{white-space:nowrap; font-weight:600; color:var(--ink2); text-align:left; padding:8px 14px 8px 0; background:none; border-bottom:1px solid var(--ink)}
 table.pass td{padding:10px 14px 10px 0; border-bottom:1px solid var(--line); vertical-align:top}
-table.pass td.sat{font:600 20px/1.1 var(--f-disp)}
+table.pass td.sat{font:600 17px/1.2 var(--f-disp)}
 table.pass td:not(.sat){white-space:nowrap}
 table.pass td.sat i{display:inline-block; width:10px; height:10px; margin-right:8px}
 table.pass .moved{color:var(--harm); font-weight:600}
@@ -134,7 +134,7 @@ table.pass small{display:block; color:var(--ink2); font:400 12.5px/1.6 var(--f-u
 .routes{border-top:1.5px solid var(--ink)}
 .routes a{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,7fr); gap:6px 40px; padding:20px 0; border-bottom:1px solid var(--line);
   text-decoration:none; color:var(--ink); align-items:baseline}
-.routes a b{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp)}
+.routes a b{font:700 clamp(26px,3.4vw,40px)/1 var(--f-disp); letter-spacing:-.025em}
 .routes a span{color:var(--ink2); font-size:16px; max-width:56ch}
 .routes a:hover b{color:var(--acc)}
 .proof{font-size:clamp(19px,2.1vw,22px); line-height:1.5; max-width:60ch; margin:0}
@@ -143,14 +143,14 @@ table.pass small{display:block; color:var(--ink2); font:400 12.5px/1.6 var(--f-u
 .shift-grid{display:grid; grid-template-columns:1fr; gap:22px}
 .shift-clock svg{display:block; width:100%; height:auto; overflow:visible}
 .shift-clock svg text{font:400 13px var(--f-ui); fill:var(--ink2)}
-.shift-clock svg .sat{font:600 17px var(--f-disp); fill:var(--ink)}
+.shift-clock svg .sat{font:600 15px var(--f-disp); fill:var(--ink)}
 .shift-cap{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:10px 0 0; max-width:70ch}
 .shift-nums{margin:0; display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) minmax(0,1fr); gap:0 32px}
 .shift-nums div{padding:12px 0 0; border-top:1px solid var(--line)}
 .shift-nums p{grid-column:1/-1}
 .shift-nums dt{font:600 13.5px var(--f-ui); color:var(--ink2); margin:0 0 4px}
 .shift-nums dd{margin:0}
-.shift-nums dd b{display:block; font:800 clamp(30px,3.2vw,42px)/.95 var(--f-disp); white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--ink)}
+.shift-nums dd b{display:block; font:700 clamp(26px,2.8vw,36px)/1 var(--f-disp); letter-spacing:-.02em; white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--ink)}
 .shift-nums dd b.hot{color:var(--harm)}
 .shift-nums dd span{display:block; font-size:14px; color:var(--ink2); margin-top:6px; max-width:34ch}
 .shift-nums p{margin:14px 0 0; font-size:16px; max-width:40ch}
@@ -167,7 +167,7 @@ table.pass small{display:block; color:var(--ink2); font:400 12.5px/1.6 var(--f-u
 svg{display:block; overflow:visible}
 svg text{font-family:var(--f-ui); font-size:12px; fill:var(--ink2)}
 svg .lab{fill:var(--ink)}
-svg .big{font-family:var(--f-disp); font-weight:800; fill:var(--ink)}
+svg .big{font-family:var(--f-disp); font-weight:700; fill:var(--ink)}
 svg .grid{stroke:var(--line); stroke-width:1}
 svg [data-tip]{cursor:crosshair}
 .scene{background:var(--ground2)}
@@ -184,7 +184,7 @@ table.ev .r{text-align:right}
 .g-orta{color:var(--modis)}
 .g-düşük{color:var(--ink2)}
 .now{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:20px 56px; align-items:start; border-top:1.5px solid var(--ink); padding-top:18px}
-.now h2{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); margin:0 0 12px}
+.now h2{font:700 clamp(26px,3.4vw,40px)/1 var(--f-disp); margin:0 0 12px; letter-spacing:-.025em}
 .now p{margin:0; color:var(--ink2); font-size:15px; max-width:44ch}
 .nowtab td.sat button.nowgo{all:unset; cursor:pointer; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px}
 .nowtab td.sat button.nowgo:hover{color:var(--acc)}
@@ -214,7 +214,7 @@ body.printing .tool{max-width:780px}
   .bar, .foot, .tool-head, #panel-region, #panel-world, #panel-upload, #exwait, #exmapcap, #tip, .pg:not([data-page="hesapla"]){display:none!important}
   .pg{padding:0; gap:0} .wrap{max-width:none; padding:0}
   .rep-head{display:block; border-bottom:1.5px solid #000; padding-bottom:8px; margin-bottom:12px}
-  .rep-head h1{font:800 34px/1 var(--f-disp); margin:0 0 6px}
+  .rep-head h1{font:700 28px/1.05 var(--f-disp); margin:0 0 6px}
   .rep-head p{margin:0; font:400 12px/1.5 var(--f-ui)}
   .rep-foot{display:block; font:400 11px/1.55 var(--f-ui); border-top:1px solid #000; margin:14px 0 0; padding-top:6px}
   .results > div, .res-row > div, .work{break-inside:avoid}
@@ -225,7 +225,7 @@ body.printing .tool{max-width:780px}
 .gbox .g{margin-right:6px}
 #tip{position:fixed; z-index:40; pointer-events:none; background:var(--ink); color:var(--ground); font:400 13px/1.5 var(--f-ui);
   padding:7px 9px; max-width:260px; transform:translate(12px,12px)}
-#tip b{display:block; font:800 20px/1.1 var(--f-disp)}
+#tip b{display:block; font:700 16px/1.2 var(--f-disp)}
 @media (max-width:860px){ .sec{grid-template-columns:1fr} }
 
 /* --- hesapla (kesif araci) --- */
@@ -245,7 +245,7 @@ body.printing .tool{max-width:780px}
 .selinfo .summary{font-size:18px; line-height:1.5; margin:0}
 .drop{border:1.5px dashed var(--ink2); padding:22px; display:flex; flex-direction:column; gap:10px; font-size:15px; background:var(--ground2)}
 .drop.over{border-color:var(--acc); background:var(--ground)}
-.drop strong{font:800 24px/1 var(--f-disp)}
+.drop strong{font:700 20px/1.1 var(--f-disp)}
 .drop input{font:400 13.5px var(--f-ui); color:var(--ink2); max-width:100%}
 .msg{font:400 13.5px/1.6 var(--f-ui); color:var(--ink2); margin:0}
 .msg.err{color:var(--err)}
@@ -293,7 +293,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wmap .leaflet-tile-pane{filter:saturate(.35) contrast(.95)}
 .wmap.dark .leaflet-tile-pane{filter:invert(.92) hue-rotate(180deg) saturate(.3) brightness(.9)}
 .wsel{font-size:17px; margin:0}
-.wsel b{font:800 26px/1 var(--f-disp); display:block; margin-bottom:2px}
+.wsel b{font:700 22px/1.1 var(--f-disp); display:block; margin-bottom:2px; letter-spacing:-.015em}
 .wprog{height:6px; background:var(--ground2); border:1px solid var(--line)}
 .wprog i{display:block; height:100%; width:0; background:var(--acc)}
 @media (prefers-reduced-motion:no-preference){ .wprog i{transition:width .4s} }
@@ -303,7 +303,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 /* --- karsilastir --- */
 .cmp-pick{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px}
 .slot{background:var(--ground2); border-top:4px solid var(--c); padding:14px; display:flex; flex-direction:column; gap:12px}
-.slot h3{font:800 34px/1 var(--f-disp); color:var(--c)}
+.slot h3{font:700 28px/1 var(--f-disp); color:var(--c)}
 .slot .controls select{max-width:100%}
 .picker{background:var(--ground2); padding:16px; display:flex; flex-direction:column; gap:14px; background:var(--ground)}
 .cmp-sum{font-size:19px; line-height:1.5; margin:0; max-width:66ch}
@@ -316,7 +316,7 @@ table.cmp .r{text-align:right}
 /* --- hakkinda --- */
 .about{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,3fr); gap:28px 44px}
 .about dl{margin:0; display:grid; grid-template-columns:minmax(0,1fr); gap:18px}
-.about dt{font:600 22px/1.05 var(--f-disp)}
+.about dt{font:600 19px/1.15 var(--f-disp)}
 .about dd{margin:4px 0 0; color:var(--ink2); font-size:16px; max-width:64ch}
 @media (max-width:860px){ .about{grid-template-columns:1fr} }
 .foot{border-top:1.5px solid var(--ink); padding-block:20px 40px; font:400 13px/1.8 var(--f-ui); color:var(--ink2)}
