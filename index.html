@@ -11,18 +11,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/yerel/fonts.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Martian+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
 /* Renk: termal kamera skalasi (acik temada sicak = koyu, koyu temada sicak = parlak), sensor basina tek renk.
-   Yazi: Big Shoulders Display basliklar, Atkinson Hyperlegible metin, Martian Mono etiket ve sayilar. */
+   Yazi: Big Shoulders Display yalnizca buyuk basliklar; geri kalan her sey (metin, etiket, sayi) Public Sans. */
 :root{
   --ground:#eceee8; --ground2:#e3e6df; --ground3:#d9ddd4; --ink:#181c21; --ink2:#575e66; --line:#c4c8c0; --cell0:#dcdfd7;
   --viirs:#2d5f8b; --modis:#9a5b16; --harm:#c0392b; --peak:rgba(192,57,43,.13);
   --terra:#9a5b16; --aqua:#1f7a6d; --snpp:#2d5f8b;
   --t0:#f3e6b4; --t1:#efa752; --t2:#d95a2b; --t3:#a3223f; --t4:#4c1456;
   --f-disp:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;
-  --f-body:"Atkinson Hyperlegible",system-ui,"Segoe UI",sans-serif;
-  --f-mono:"Martian Mono",ui-monospace,Consolas,"Courier New",monospace;
+  --f-body:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
+  --f-ui:"Public Sans",system-ui,"Segoe UI",Arial,sans-serif;
+  --f-mono:var(--f-ui);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --ground:#0e1320; --ground2:#141a2a; --ground3:#1b2336; --ink:#e3e6ea; --ink2:#9aa1ad; --line:#2a3245; --cell0:#192032;
@@ -36,26 +37,27 @@
   --t0:#2a1a44; --t1:#6d1c62; --t2:#bb3443; --t3:#ef7c25; --t4:#fbe08a; color-scheme:dark}
 
 *{box-sizing:border-box}
+:root *{font-variant-numeric:tabular-nums!important}   /* sayilar alt alta hizali (tek aralikli yazi yerine) */
 body{margin:0; background:var(--ground); color:var(--ink); font:17px/1.55 var(--f-body)}
 [hidden]{display:none!important}
 #exmap{-webkit-user-select:none;user-select:none}
 a{color:var(--ink); text-underline-offset:3px}
 a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 .wrap{width:100%; max-width:1180px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
-.n{font:600 .85em var(--f-mono); color:var(--harm); white-space:nowrap}
+.n{font:600 .95em var(--f-ui); color:var(--harm); white-space:nowrap}
 
 /* --- ust cubuk --- */
 .bar{position:sticky; top:0; z-index:30; background:var(--ground); border-bottom:1.5px solid var(--ink)}
 .bar .wrap{display:flex; align-items:center; gap:28px; min-height:56px}
 .brand{display:flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none; font:800 24px/1 var(--f-disp); text-transform:uppercase; letter-spacing:.01em; white-space:nowrap}
 .brand svg{width:26px; height:26px; flex:none}
-.nav{display:flex; gap:22px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; font:600 12px var(--f-mono)}
+.nav{display:flex; gap:22px; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; font:600 13.5px var(--f-ui)}
 .nav::-webkit-scrollbar{display:none}
 .nav a{color:var(--ink2); text-decoration:none; padding:6px 0 4px; border-bottom:2px solid transparent; white-space:nowrap}
 .nav a:hover{color:var(--ink)}
 .nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--harm)}
-.status{margin:0; font:400 11px var(--f-mono); color:var(--ink2); white-space:nowrap}
-.langbtn{flex:none; font:600 12px var(--f-mono); background:none; color:var(--ink); border:1.5px solid var(--ink); padding:5px 9px; cursor:pointer}
+.status{margin:0; font:400 13px var(--f-ui); color:var(--ink2); white-space:nowrap}
+.langbtn{flex:none; font:600 13.5px var(--f-ui); background:none; color:var(--ink); border:1.5px solid var(--ink); padding:5px 9px; cursor:pointer}
 .langbtn:hover{background:var(--ink); color:var(--ground)}
 @media (max-width:860px){ .status{display:none} .bar .wrap{gap:14px} .brand span{display:none} .nav{gap:16px} }
 
@@ -63,7 +65,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 main{display:block}
 .pg{padding-block:36px 72px; display:flex; flex-direction:column; gap:48px}
 .pg[data-page="ana"]{padding-top:0}
-.head h1{font:800 clamp(48px,8vw,96px)/.88 var(--f-disp); text-transform:uppercase; margin:0; letter-spacing:.005em}
+.head h1{font:800 clamp(48px,8vw,96px)/.88 var(--f-disp); margin:0; letter-spacing:.005em}
 .head p{margin:12px 0 0; font-size:18px; color:var(--ink2); max-width:60ch}
 h2{font:600 34px/1 var(--f-disp); margin:0; text-wrap:balance}
 h3{font:600 22px/1.05 var(--f-disp); margin:0}
@@ -74,7 +76,7 @@ p{max-width:68ch}
 .hero-map{max-width:1440px; margin:0 auto; position:relative}
 .hero-map svg{width:100%; height:auto; overflow:hidden}
 @media (max-width:640px){ .hero-key{position:static!important; margin:8px 16px 0} }
-.hero-key{position:absolute; left:max(16px, env(safe-area-inset-left, 0px)); bottom:12px; right:16px; font:400 11px/1.6 var(--f-mono); color:var(--ink2);
+.hero-key{position:absolute; left:max(16px, env(safe-area-inset-left, 0px)); bottom:12px; right:16px; font:400 13px/1.6 var(--f-ui); color:var(--ink2);
   display:flex; align-items:center; gap:10px; background:color-mix(in srgb, var(--ground2) 86%, transparent); padding:5px 8px; width:fit-content; max-width:calc(100% - 32px)}
 .hero-key i{display:inline-block; width:96px; height:8px; flex:none}
 #globe{display:block; width:100%; height:480px; cursor:grab; touch-action:pan-y; outline-offset:-3px}
@@ -85,24 +87,24 @@ p{max-width:68ch}
 .hero.space .hero-key{position:static; margin:0 16px; padding:8px 0 12px; background:none; max-width:none}
 .hero-tools{position:absolute; top:12px; right:16px; display:flex; flex-direction:column; align-items:flex-end; gap:8px}
 .hrow{display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:8px}
-.gclock{font:600 12px var(--f-mono); color:var(--ink2); font-variant-numeric:tabular-nums}
+.gclock{font:600 13.5px var(--f-ui); color:var(--ink2); font-variant-numeric:tabular-nums}
 .hero-tools .seg{background:var(--ground2)}
-.gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1.5px solid var(--ink); padding:6px 10px; font:600 12px var(--f-mono)}
+.gbar{display:flex; align-items:center; gap:10px; background:var(--ground2); border:1.5px solid var(--ink); padding:6px 10px; font:600 13.5px var(--f-ui)}
 .gbar .btn{padding:4px 10px; font-size:12px}
 .gbar input{width:150px; accent-color:var(--harm)}
-.gbar b{display:inline-block; min-width:9ch; font:800 20px/1 var(--f-disp); text-transform:uppercase}
+.gbar b{display:inline-block; min-width:9ch; font:800 20px/1 var(--f-disp)}
 #gyear b{min-width:4ch} #gyear span{color:var(--ink2)}
 .tourgo{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); padding:7px 12px; font-size:12px}
 .tour{position:absolute; top:12px; left:max(16px, env(safe-area-inset-left, 0px)); width:min(340px, calc(100% - 32px)); background:var(--ground2); border:1.5px solid var(--ink); padding:14px 16px 16px; z-index:2}
-.tour-n{margin:0 0 6px; font:600 11px var(--f-mono); color:var(--ink2)}
-.tour h3{margin:0 0 8px; font:800 28px/1 var(--f-disp); text-transform:uppercase}
+.tour-n{margin:0 0 6px; font:600 13px var(--f-ui); color:var(--ink2)}
+.tour h3{margin:0 0 8px; font:800 28px/1 var(--f-disp)}
 .tour p#tourp{margin:0 0 14px; font-size:15px; line-height:1.45}
 .tour-b{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
 .tour-b .btn{padding:6px 12px; font-size:12px}
 .tour-b .btn:disabled{opacity:.4; cursor:default}
-.tour-b .mini{all:unset; cursor:pointer; margin-left:auto; font:400 11px var(--f-mono); color:var(--ink2); text-decoration:underline; text-underline-offset:3px}
+.tour-b .mini{all:unset; cursor:pointer; margin-left:auto; font:400 13px var(--f-ui); color:var(--ink2); text-decoration:underline; text-underline-offset:3px}
 .tour i{position:absolute; left:0; bottom:0; height:3px; width:0; background:var(--harm)}
-.gpick{position:absolute; top:56px; left:max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; font:600 12px var(--f-mono); max-width:260px}
+.gpick{position:absolute; top:56px; left:max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; font:600 13.5px var(--f-ui); max-width:260px}
 .gpick span:first-child{background:var(--ground2); padding:3px 6px}
 #gpickmsg{color:var(--harm); background:var(--ground2)}
 @media (max-width:640px){ .hero-tools, .gpick, .tour, .tourgo{position:static; margin:8px 16px 0; align-items:flex-start} .hrow{justify-content:flex-start} }
@@ -110,25 +112,25 @@ p{max-width:68ch}
 .intro h1{font:800 clamp(64px,11vw,140px)/.84 var(--f-disp); text-transform:uppercase; letter-spacing:.005em; margin:0 0 22px}
 .lead{font-size:clamp(19px,2.1vw,22px); line-height:1.5; margin:0; max-width:46ch}
 .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
-.btn{display:inline-flex; align-items:center; font:600 13px var(--f-mono); text-decoration:none; padding:10px 16px; cursor:pointer; border:1.5px solid var(--ink); color:var(--ink); background:var(--ground)}
+.btn{display:inline-flex; align-items:center; font:600 14.5px var(--f-ui); text-decoration:none; padding:10px 16px; cursor:pointer; border:1.5px solid var(--ink); color:var(--ink); background:var(--ground)}
 .btn.primary{background:var(--ink); color:var(--ground)}
 .btn:hover{background:var(--ink); color:var(--ground)}
 .btn.primary:hover{background:var(--harm); border-color:var(--harm); color:var(--ground)}
 .passlog{border:1.5px solid var(--ink)}
 .passlog h2{font:600 26px/1 var(--f-disp); padding:14px 14px 8px; margin:0}
-.passlog p{font:400 11px/1.6 var(--f-mono); color:var(--ink2); margin:0; padding:0 14px 12px}
-table.pass{width:100%; border-collapse:collapse; font:400 12px var(--f-mono); font-variant-numeric:tabular-nums}
+.passlog p{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:0; padding:0 14px 12px}
+table.pass{width:100%; border-collapse:collapse; font:400 13.5px var(--f-ui); font-variant-numeric:tabular-nums}
 table.pass th{white-space:nowrap; font-weight:600; color:var(--ink2); text-align:left; padding:7px 14px; border-top:1.5px solid var(--ink)}
 table.pass td{padding:9px 14px; border-top:1px solid var(--line); vertical-align:top}
 table.pass td.sat{font:600 20px/1.1 var(--f-disp)}
 table.pass td:not(.sat){white-space:nowrap}
 table.pass td.sat i{display:inline-block; width:10px; height:10px; margin-right:8px}
 table.pass .moved{color:var(--harm); font-weight:600}
-table.pass small{display:block; color:var(--ink2); font:400 10.5px/1.6 var(--f-mono); margin-top:3px}
+table.pass small{display:block; color:var(--ink2); font:400 12.5px/1.6 var(--f-ui); margin-top:3px}
 .routes{border-top:1.5px solid var(--ink)}
 .routes a{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,7fr); gap:6px 40px; padding:20px 0; border-bottom:1px solid var(--line);
   text-decoration:none; color:var(--ink); align-items:baseline}
-.routes a b{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); text-transform:uppercase}
+.routes a b{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp)}
 .routes a span{color:var(--ink2); font-size:16px; max-width:56ch}
 .routes a:hover b{color:var(--harm)}
 .proof{font-size:clamp(19px,2.1vw,22px); line-height:1.5; max-width:60ch; margin:0}
@@ -136,13 +138,13 @@ table.pass small{display:block; color:var(--ink2); font:400 10.5px/1.6 var(--f-m
 .shift{padding-bottom:22px; border-bottom:1px solid var(--line)}
 .shift-grid{display:grid; grid-template-columns:1fr; gap:22px}
 .shift-clock svg{display:block; width:100%; height:auto; overflow:visible}
-.shift-clock svg text{font:400 11px var(--f-mono); fill:var(--ink2)}
+.shift-clock svg text{font:400 13px var(--f-ui); fill:var(--ink2)}
 .shift-clock svg .sat{font:600 17px var(--f-disp); fill:var(--ink)}
-.shift-cap{font:400 11px/1.6 var(--f-mono); color:var(--ink2); margin:10px 0 0; max-width:70ch}
+.shift-cap{font:400 13px/1.6 var(--f-ui); color:var(--ink2); margin:10px 0 0; max-width:70ch}
 .shift-nums{margin:0; display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) minmax(0,1fr); gap:0 32px}
 .shift-nums div{padding:12px 0 0; border-top:1px solid var(--line)}
 .shift-nums p{grid-column:1/-1}
-.shift-nums dt{font:600 12px var(--f-mono); color:var(--ink2); margin:0 0 4px}
+.shift-nums dt{font:600 13.5px var(--f-ui); color:var(--ink2); margin:0 0 4px}
 .shift-nums dd{margin:0}
 .shift-nums dd b{display:block; font:800 clamp(30px,3.2vw,42px)/.95 var(--f-disp); white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--ink)}
 .shift-nums dd b.hot{color:var(--harm)}
@@ -155,39 +157,39 @@ table.pass small{display:block; color:var(--ink2); font:400 10.5px/1.6 var(--f-m
 .sec{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,3fr); gap:20px 44px; padding-top:36px; border-top:1.5px solid var(--ink)}
 .side{display:flex; flex-direction:column; gap:12px; min-width:0}
 .side p{margin:0; font-size:15px; color:var(--ink2); max-width:40ch}
-.side .how{font:400 11px/1.7 var(--f-mono); color:var(--ink2); border-left:2px solid var(--harm); padding-left:10px}
+.side .how{font:400 13px/1.6 var(--f-ui); color:var(--ink2)}
 .plot{min-width:0; display:flex; flex-direction:column; gap:14px}
 .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
 svg{display:block; overflow:visible}
-svg text{font-family:var(--f-mono); font-size:11px; fill:var(--ink2)}
+svg text{font-family:var(--f-ui); font-size:12px; fill:var(--ink2)}
 svg .lab{fill:var(--ink)}
 svg .big{font-family:var(--f-disp); font-weight:800; fill:var(--ink)}
 svg .grid{stroke:var(--line); stroke-width:1}
 svg [data-tip]{cursor:crosshair}
 .scene{background:var(--ground2)}
-.cap{font:400 11px/1.7 var(--f-mono); color:var(--ink2); margin:0}
-code{font:400 12px var(--f-mono); background:var(--ground2); padding:1px 5px}
-table.ev{border-collapse:collapse; width:100%; font:400 12px var(--f-mono); font-variant-numeric:tabular-nums}
+.cap{font:400 13px/1.7 var(--f-ui); color:var(--ink2); margin:0}
+code{font:400 13.5px var(--f-ui); background:var(--ground2); padding:1px 5px}
+table.ev{border-collapse:collapse; width:100%; font:400 13.5px var(--f-ui); font-variant-numeric:tabular-nums}
 table.ev th{font-weight:600; color:var(--ink2); text-align:left; padding:6px 10px 6px 0; border-bottom:1.5px solid var(--ink)}
 table.ev td{padding:7px 10px 7px 0; border-bottom:1px solid var(--line); white-space:nowrap}
 table.ev td:first-child{white-space:normal; min-width:150px; font:400 15px var(--f-body)}
 table.ev td small{display:block; color:var(--ink2); font-size:10.5px}
 table.ev .r{text-align:right}
-.g{display:inline-block; padding:1px 7px; font:600 11px var(--f-mono); border:1px solid currentColor}
+.g{display:inline-block; padding:1px 7px; font:600 13px var(--f-ui); border:1px solid currentColor}
 .g-yüksek{color:var(--harm)}
 .g-orta{color:var(--modis)}
 .g-düşük{color:var(--ink2)}
 .now{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:20px 56px; align-items:start; border-top:1.5px solid var(--ink); padding-top:18px}
-.now h2{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); text-transform:uppercase; margin:0 0 12px}
+.now h2{font:800 clamp(32px,4.4vw,52px)/.9 var(--f-disp); margin:0 0 12px}
 .now p{margin:0; color:var(--ink2); font-size:15px; max-width:44ch}
 .nowtab td.sat button.nowgo{all:unset; cursor:pointer; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px}
 .nowtab td.sat button.nowgo:hover{color:var(--harm)}
-.nowtab .mini{all:unset; cursor:pointer; font:400 11px var(--f-mono); text-decoration:underline; text-underline-offset:3px; color:var(--ink2); white-space:nowrap}
+.nowtab .mini{all:unset; cursor:pointer; font:400 13px var(--f-ui); text-decoration:underline; text-underline-offset:3px; color:var(--ink2); white-space:nowrap}
 .nowtab .mini:hover{color:var(--harm)}
 .nowtab td.sat button.nowgo:focus-visible, .nowtab .mini:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 @media (max-width:860px){ .now{grid-template-columns:1fr} }
 .exports{display:flex; flex-wrap:wrap; gap:8px; margin-left:auto}
-details.wsets > summary, details.adv > summary{cursor:pointer; font:400 11px var(--f-mono); color:var(--ink2); width:fit-content}
+details.wsets > summary, details.adv > summary{cursor:pointer; font:400 13px var(--f-ui); color:var(--ink2); width:fit-content}
 details.wsets > summary:hover, details.adv > summary:hover{color:var(--ink)}
 details.wsets[open] > summary{margin-bottom:6px}
 details.adv{align-self:center}
@@ -197,7 +199,7 @@ details.adv[open]{flex-basis:100%; order:9}
 .controls button.act.repbtn:hover{background:var(--harm); border-color:var(--harm); color:var(--ground)}
 .controls button.repbtn svg{width:15px; height:15px; flex:none}
 .filebtn{cursor:pointer}
-.filebtn input{display:block; margin-top:4px; font:400 11px var(--f-mono); max-width:230px}
+.filebtn input{display:block; margin-top:4px; font:400 13px var(--f-ui); max-width:230px}
 .filebtn small{display:block; color:var(--ink2)}
 .rep-head, .rep-foot{display:none}
 body.printing .tool{max-width:780px}
@@ -208,16 +210,16 @@ body.printing .tool{max-width:780px}
   .bar, .foot, .tool-head, #panel-region, #panel-world, #panel-upload, #exwait, #exmapcap, #tip, .pg:not([data-page="hesapla"]){display:none!important}
   .pg{padding:0; gap:0} .wrap{max-width:none; padding:0}
   .rep-head{display:block; border-bottom:1.5px solid #000; padding-bottom:8px; margin-bottom:12px}
-  .rep-head h1{font:800 34px/1 var(--f-disp); text-transform:uppercase; margin:0 0 6px}
-  .rep-head p{margin:0; font:400 10px/1.5 var(--f-mono)}
-  .rep-foot{display:block; font:400 9px/1.55 var(--f-mono); border-top:1px solid #000; margin:14px 0 0; padding-top:6px}
+  .rep-head h1{font:800 34px/1 var(--f-disp); margin:0 0 6px}
+  .rep-head p{margin:0; font:400 12px/1.5 var(--f-ui)}
+  .rep-foot{display:block; font:400 11px/1.55 var(--f-ui); border-top:1px solid #000; margin:14px 0 0; padding-top:6px}
   .results > div, .res-row > div, .work{break-inside:avoid}
   svg{max-width:100%; height:auto}
   .scroll{overflow:visible}
 }
 .gbox{display:block; margin-bottom:8px; color:var(--ink)}
 .gbox .g{margin-right:6px}
-#tip{position:fixed; z-index:40; pointer-events:none; background:var(--ink); color:var(--ground); font:400 11px/1.5 var(--f-mono);
+#tip{position:fixed; z-index:40; pointer-events:none; background:var(--ink); color:var(--ground); font:400 13px/1.5 var(--f-ui);
   padding:7px 9px; max-width:260px; transform:translate(12px,12px)}
 #tip b{display:block; font:800 20px/1.1 var(--f-disp)}
 @media (max-width:860px){ .sec{grid-template-columns:1fr} }
@@ -225,13 +227,13 @@ body.printing .tool{max-width:780px}
 /* --- hesapla (kesif araci) --- */
 .tool{display:flex; flex-direction:column; gap:22px}
 .tool-head{display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px 32px}
-.modes{display:flex; gap:22px; font:600 13px var(--f-mono)}
+.modes{display:flex; gap:22px; font:600 14.5px var(--f-ui)}
 .modes button{all:unset; cursor:pointer; color:var(--ink2); padding-bottom:5px; border-bottom:2px solid transparent}
 .modes button[aria-pressed="true"]{color:var(--ink); border-bottom-color:var(--harm)}
 .modes button:focus-visible{outline:2px solid var(--harm); outline-offset:3px}
-.controls{display:flex; flex-wrap:wrap; gap:14px 22px; align-items:end; font:400 11px var(--f-mono); color:var(--ink2)}
+.controls{display:flex; flex-wrap:wrap; gap:14px 22px; align-items:end; font:400 13px var(--f-ui); color:var(--ink2)}
 .controls label{display:flex; flex-direction:column; gap:6px}
-.controls select, .controls button.act, .wsearch button{font:600 13px var(--f-mono); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:7px 10px; border-radius:0}
+.controls select, .controls button.act, .wsearch button{font:600 14.5px var(--f-ui); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:7px 10px; border-radius:0}
 .controls button.act, .wsearch button{cursor:pointer}
 .controls button.act:hover, .wsearch button:hover{background:var(--ink); color:var(--ground)}
 .work{display:grid; grid-template-columns:minmax(0,3fr) minmax(0,2fr); gap:24px 36px; align-items:start}
@@ -240,10 +242,10 @@ body.printing .tool{max-width:780px}
 .drop{border:1.5px dashed var(--ink2); padding:22px; display:flex; flex-direction:column; gap:10px; font-size:15px; background:var(--ground2)}
 .drop.over{border-color:var(--harm); background:var(--ground)}
 .drop strong{font:800 24px/1 var(--f-disp)}
-.drop input{font:400 12px var(--f-mono); color:var(--ink2); max-width:100%}
-.msg{font:400 12px/1.6 var(--f-mono); color:var(--ink2); margin:0}
+.drop input{font:400 13.5px var(--f-ui); color:var(--ink2); max-width:100%}
+.msg{font:400 13.5px/1.6 var(--f-ui); color:var(--ink2); margin:0}
 .msg.err{color:var(--harm)}
-table.seasons{border-collapse:collapse; font:400 12px var(--f-mono); width:100%; font-variant-numeric:tabular-nums}
+table.seasons{border-collapse:collapse; font:400 13.5px var(--f-ui); width:100%; font-variant-numeric:tabular-nums}
 table.seasons th{font-weight:600; text-align:left; color:var(--ink2); padding:6px 10px 6px 0; border-bottom:1.5px solid var(--ink)}
 table.seasons td{padding:5px 10px 5px 0; border-bottom:1px solid var(--line); white-space:nowrap}
 table.seasons td.r, table.seasons th.r{text-align:right}
@@ -252,7 +254,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .res-row > div{min-width:0; display:flex; flex-direction:column; gap:10px}
 @media (max-width:860px){ .work{grid-template-columns:1fr} }
 .world{display:flex; flex-direction:column; gap:14px}
-.woff{border-left:3px solid var(--harm); padding:4px 0 4px 14px; font-size:15px; display:flex; flex-direction:column; gap:6px; max-width:70ch}
+.woff{background:var(--ground2); padding:14px 16px; font-size:15px; display:flex; flex-direction:column; gap:6px; max-width:70ch}
 .wsearch{display:flex; gap:10px; flex-wrap:wrap}
 .wsearch input{flex:1 1 260px; min-width:0; font:400 16px var(--f-body); color:var(--ink); background:var(--ground); border:1.5px solid var(--ink); padding:9px 12px; border-radius:0}
 .wres{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; max-height:236px; overflow:auto}
@@ -262,20 +264,20 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wres button:hover, .wres button[aria-current="true"]{background:var(--ground2)}
 .wres button:focus-visible{outline:2px solid var(--harm); outline-offset:-2px}
 .wres b{font-weight:700; font-size:15px}
-.wres small{grid-column:1; font:400 11px/1.5 var(--f-mono); color:var(--ink2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.wres em{font:400 11px var(--f-mono); color:var(--ink2); font-style:normal; grid-row:1/3; grid-column:2; align-self:center}
+.wres small{grid-column:1; font:400 13px/1.5 var(--f-ui); color:var(--ink2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.wres em{font:400 13px var(--f-ui); color:var(--ink2); font-style:normal; grid-row:1/3; grid-column:2; align-self:center}
 .wsets{display:flex; flex-direction:column; gap:6px}
-.wsets > .lab{font:400 11px var(--f-mono); color:var(--ink2)}
+.wsets > .lab{font:400 13px var(--f-ui); color:var(--ink2)}
 .chipbox{display:flex; flex-wrap:wrap; gap:6px}
 .lab .mini{all:unset; cursor:pointer; margin-left:10px; text-decoration:underline; text-underline-offset:3px; color:var(--ink2)}
 .lab .mini:hover{color:var(--harm)}
 .lab .mini:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
-.chipbox button{all:unset; cursor:pointer; font:600 12px var(--f-mono); padding:5px 9px; border:1px solid var(--line); color:var(--ink)}
+.chipbox button{all:unset; cursor:pointer; font:600 13.5px var(--f-ui); padding:5px 9px; border:1px solid var(--line); color:var(--ink)}
 #whchips button{border-style:dashed; color:var(--ink2)}
 .chipbox button:hover, .chipbox button[aria-current="true"]{border-color:var(--harm); color:var(--harm)}
 .chipbox button:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 .seg{display:inline-flex; border:1.5px solid var(--ink)}
-.seg button{all:unset; cursor:pointer; font:600 12px var(--f-mono); padding:7px 10px; color:var(--ink2)}
+.seg button{all:unset; cursor:pointer; font:600 13.5px var(--f-ui); padding:7px 10px; color:var(--ink2)}
 .seg button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
 .seg button:focus-visible{outline:2px solid var(--harm); outline-offset:2px}
 .controls .chk{flex-direction:row; align-items:center; gap:8px}
@@ -291,8 +293,8 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .wprog{height:6px; background:var(--ground2); border:1px solid var(--line)}
 .wprog i{display:block; height:100%; width:0; background:var(--harm)}
 @media (prefers-reduced-motion:no-preference){ .wprog i{transition:width .4s} }
-.leaflet-container{font:400 11px var(--f-mono)!important; background:var(--ground2)!important}
-.leaflet-control-attribution{font:400 10px var(--f-mono)!important}
+.leaflet-container{font:400 13px var(--f-ui)!important; background:var(--ground2)!important}
+.leaflet-control-attribution{font:400 12px var(--f-ui)!important}
 
 /* --- karsilastir --- */
 .cmp-pick{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px}
@@ -301,7 +303,7 @@ table.seasons td.r, table.seasons th.r{text-align:right}
 .slot .controls select{max-width:100%}
 .picker{border:1.5px solid var(--ink); padding:16px; display:flex; flex-direction:column; gap:14px; background:var(--ground)}
 .cmp-sum{font-size:19px; line-height:1.5; margin:0; max-width:66ch}
-table.cmp{border-collapse:collapse; font:400 12px var(--f-mono); width:100%; max-width:860px; font-variant-numeric:tabular-nums}
+table.cmp{border-collapse:collapse; font:400 13.5px var(--f-ui); width:100%; max-width:860px; font-variant-numeric:tabular-nums}
 table.cmp th{font-weight:600; color:var(--ink2); text-align:left; padding:7px 12px 7px 0; border-bottom:1.5px solid var(--ink)}
 table.cmp td{padding:7px 12px 7px 0; border-bottom:1px solid var(--line)}
 table.cmp td:first-child{font:400 15px var(--f-body)}
@@ -313,7 +315,7 @@ table.cmp .r{text-align:right}
 .about dt{font:600 22px/1.05 var(--f-disp)}
 .about dd{margin:4px 0 0; color:var(--ink2); font-size:16px; max-width:64ch}
 @media (max-width:860px){ .about{grid-template-columns:1fr} }
-.foot{border-top:1.5px solid var(--ink); padding-block:20px 40px; font:400 11px/1.8 var(--f-mono); color:var(--ink2)}
+.foot{border-top:1.5px solid var(--ink); padding-block:20px 40px; font:400 13px/1.8 var(--f-ui); color:var(--ink2)}
 .foot p{margin:0}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes rise{from{opacity:0}to{opacity:1}}
@@ -2004,7 +2006,7 @@ function globeDraw() {
     ctx.globalAlpha = 1; ctx.lineWidth = 2; ctx.stroke(main[0]);
     proj(rg.lab[0], rg.lab[1], rg.r); if (P[2] > .1) labs.push([rg.nm + " " + ft(rg.lt), C(rg.cv), P[0], P[1]]); });
   if (sky) sky.sats.forEach(s => sat(s, true));
-  ctx.font = "600 13px " + C("--f-mono"); ctx.lineJoin = "round";
+  ctx.font = "600 14px " + C("--f-ui"); ctx.lineJoin = "round";
   labs.forEach(([txt, col, x, y]) => { ctx.lineWidth = 5; ctx.strokeStyle = "#080b14"; ctx.strokeText(txt, x + 10, y - 6); ctx.fillStyle = col; ctx.fillText(txt, x + 10, y - 6); });
   /* secilen yer */
   if (GL.pick) { proj(GL.pick[0], GL.pick[1]); if (P[2] > 0) { ctx.beginPath(); ctx.arc(P[0], P[1], 9, 0, 2 * Math.PI); ctx.strokeStyle = C("--ground"); ctx.lineWidth = 5; ctx.stroke();
